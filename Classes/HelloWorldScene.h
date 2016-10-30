@@ -42,8 +42,8 @@
 #define hazure_gif "はずれ_2.jpg"
 #define doujou_gif "同情_2.jpg"
 
-#define LIFE_MAX 10
-#define START_LIFE 10
+#define LIFE_MAX 20
+#define START_LIFE 15
 #define SEII_MAX 20
 #define START_SEII 0
 #define LEVEL_TIME 30
