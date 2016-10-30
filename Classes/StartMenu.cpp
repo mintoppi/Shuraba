@@ -7,6 +7,7 @@
 //
 
 #include "StartMenu.h"
+#include "TitleMenu.h"
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 //#include "curl.h"
@@ -63,7 +64,7 @@ void StartMenuLayer::menu(){
     this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
     _label->retain();
     _label->setColor( Color3B(0, 0, 600) );
-    _label->setPosition( Point(winSize2.width/2, 700) );
+    _label->setPosition( Point(winSize2.width/2, 800) );
     this->addChild(_label);
 //
 //    this->_label = CCLabelTTF::create("END","arial", 32);
@@ -109,7 +110,7 @@ void StartMenuLayer::menu(){
     
     MenuItemLabel *label8 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
+        CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
     });
     
     Menu *menu = Menu::create(label, label2, label3, label4, label5, label6, label7, label8, NULL);
