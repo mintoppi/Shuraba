@@ -125,59 +125,59 @@ void StartMenuLayer::menu(){
     
     this->addChild(menu);
     
-    //中心となる画像
-    /*CCSprite* m_sprite = CCSprite::create();
-    m_sprite->setTextureRect(CCRectMake(0, 0, 200, 200));
-    m_sprite->setColor(ccWHITE);
-    m_sprite->setOpacity(128);
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    m_sprite->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
-    this->addChild(m_sprite);
-    
-    //螺旋状に動く画像
-    CCSprite* m_sprite2 = CCSprite::create("Icon-57.png");
-    m_sprite2->setAnchorPoint(ccp(0,0));
-    m_sprite2->setPosition(ccp(300,300));
-    m_sprite->addChild(m_sprite2, 0);
-    
-    //アニメーションを作成
-    CCActionInterval* actionRotate;
-    actionRotate = CCRotateBy::create(3, 360);
-    
-    CCActionInterval* actionScale;
-    actionScale = CCScaleTo::create(3, 0);
-    CCSpawn* actionSpan = CCSpawn::createWithTwoActions(actionRotate,actionScale);
-    m_sprite->runAction(actionSpan);*/
-    
-    //スプライトを作成
-    CCSize s = CCDirector::sharedDirector()->getVisibleSize();
-    CCSprite* pBar = CCSprite::create("bar.png");
-    
-    //タイマーにスプライトをセット
-    CCProgressTimer* pTimer = CCProgressTimer::create(pBar);
-    
-    //最初は0パーセント
-    pTimer->setPercentage(0);
-    
-    //タイマーの形（棒状に設定）
-    pTimer->setType(kCCProgressTimerTypeBar);
-    
-    //バーの伸びる方向（x方向に設定）
-    pTimer->setBarChangeRate(ccp(1, 0));
-    
-    //タイマーの基準点（左側に設定）
-    pTimer->setMidpoint(ccp(0, 0));
-    
-    //タイマーを配置
-    pTimer->setPosition(ccp(s.width*.5, s.height*.5));
-    pTimer->setTag(100);
-    addChild(pTimer);
-    
-    //パーセント表示用テキスト
-    CCLabelTTF* percentTxt = CCLabelTTF::create("0%", "Arial", 35);
-    percentTxt->setPosition(ccp(pTimer->getPositionX(), pTimer->getPositionY()+50));
-    percentTxt->setTag(200);
-    addChild(percentTxt);
+//    //中心となる画像
+//    CCSprite* m_sprite = CCSprite::create();
+//    m_sprite->setTextureRect(CCRectMake(0, 0, 200, 200));
+//    m_sprite->setColor(ccWHITE);
+//    m_sprite->setOpacity(128);
+//    Size visibleSize = Director::getInstance()->getVisibleSize();
+//    m_sprite->setPosition(ccp(visibleSize.width/2, visibleSize.height/2));
+//    this->addChild(m_sprite);
+//    
+//    //螺旋状に動く画像
+//    CCSprite* m_sprite2 = CCSprite::create("CD.png");
+//    m_sprite2->setAnchorPoint(ccp(0,0));
+//    m_sprite2->setPosition(ccp(300,300));
+//    m_sprite->addChild(m_sprite2, 0);
+//    
+//    //アニメーションを作成
+//    CCActionInterval* actionRotate;
+//    actionRotate = CCRotateBy::create(3, 360);
+//    
+//    CCActionInterval* actionScale;
+//    actionScale = CCScaleTo::create(3, 0);
+//    CCSpawn* actionSpan = CCSpawn::createWithTwoActions(actionRotate,actionScale);
+//    m_sprite->runAction(actionSpan);
+//    
+//    //スプライトを作成
+//    CCSize s = CCDirector::sharedDirector()->getVisibleSize();
+//    CCSprite* pBar = CCSprite::create("bar.png");
+//    
+//    //タイマーにスプライトをセット
+//    CCProgressTimer* pTimer = CCProgressTimer::create(pBar);
+//    
+//    //最初は0パーセント
+//    pTimer->setPercentage(0);
+//    
+//    //タイマーの形（棒状に設定）
+//    pTimer->setType(kCCProgressTimerTypeBar);
+//    
+//    //バーの伸びる方向（x方向に設定）
+//    pTimer->setBarChangeRate(ccp(1, 0));
+//    
+//    //タイマーの基準点（左側に設定）
+//    pTimer->setMidpoint(ccp(0, 0));
+//    
+//    //タイマーを配置
+//    pTimer->setPosition(ccp(s.width*.5, s.height*.5));
+//    pTimer->setTag(100);
+//    addChild(pTimer);
+//    
+//    //パーセント表示用テキスト
+//    CCLabelTTF* percentTxt = CCLabelTTF::create("0%", "Arial", 35);
+//    percentTxt->setPosition(ccp(pTimer->getPositionX(), pTimer->getPositionY()+50));
+//    percentTxt->setTag(200);
+//    addChild(percentTxt);
     
     this->scheduleUpdate();
 }
@@ -215,7 +215,7 @@ void StartMenuLayer::gameStartWinter(char* stage)
 
 bool StartMenuLayer::init()
 {
-	if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+	if ( CCLayerColor::initWithColor(Color4B(255, 240, 245, 200)))
 	{
 		return true;
 	}

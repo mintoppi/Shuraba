@@ -42,7 +42,7 @@ TitleMenuScene::~TitleMenuScene()
 Size winSize2_2;
 void TitleMenuLayer::menu(){
     
-    winSize2_2 = CCDirector::getInstance()->getWinSize();
+    winSize2_2 = Director::getInstance()->getWinSize();
     
     Size screenSize = winSize2_2;
 
@@ -53,11 +53,11 @@ void TitleMenuLayer::menu(){
     _label->setPosition( Point(winSize2_2.width/2, 700) );
     this->addChild(_label);
     
-    this->_label = CCLabelTTF::create("Game mode","Times New Roman", 64);
+    this->_label = CCLabelTTF::create("Game mode","Times New Roman", 48);
     this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
     _label->retain();
     _label->setColor( Color3B(0, 0, 600) );
-    _label->setPosition( Point(winSize2_2.width/2, 700-70) );
+    _label->setPosition( Point(winSize2_2.width/2, 700-90) );
     this->addChild(_label);
     
     
@@ -65,23 +65,18 @@ void TitleMenuLayer::menu(){
     
     MenuItemLabel *label1 = MenuItemFont::create("はじめから",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"home") );
+        Director::getInstance()->replaceScene( HelloWorld::scene((char*)"home") );
     });
     MenuItemLabel *label2 = MenuItemFont::create("続きから",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
+        Director::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
     });
     MenuItemLabel *label3 = MenuItemFont::create("ストイックモード",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( StartMenuScene::create() );
+        Director::getInstance()->replaceScene( StartMenuScene::create() );
     });
     
-    MenuItemLabel *label4 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
-    });
-    
-    Menu *menu = Menu::create(label1, label2, label3, label4, NULL);
+    Menu *menu = Menu::create(label1, label2, label3, NULL);
     
     menu->setColor( Color3B(444, 0, 0) );
     
@@ -97,13 +92,14 @@ void TitleMenuLayer::menu(){
     
     
     //CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-    //CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
+    //Director::getInstance()->replaceScene( TitleMenuScene::create() );
 
 }
 
 bool TitleMenuLayer::init()
 {
-    if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+    //if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+    if ( LayerColor::initWithColor(Color4B(255, 240, 245, 200)))
     {
         return true;
     }
