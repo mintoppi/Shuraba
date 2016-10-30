@@ -99,21 +99,13 @@ void StartMenuLayer::menu(){
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
     });
-    MenuItemLabel *label6 = MenuItemFont::create("はじめから            HISCORE",[](Ref *obj) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"home") );
-    });
-    MenuItemLabel *label7 = MenuItemFont::create("続きから            HISCORE",[](Ref *obj) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
-    });
     
-    MenuItemLabel *label8 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
+    MenuItemLabel *label6 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
     });
     
-    Menu *menu = Menu::create(label, label2, label3, label4, label5, label6, label7, label8, NULL);
+    Menu *menu = Menu::create(label, label2, label3, label4, label5, label6, NULL);
     
     menu->setColor( Color3B(444, 0, 0) );
     
