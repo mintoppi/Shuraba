@@ -9,6 +9,7 @@
 #include "TitleMenu.h"
 #include "StartMenu.h"
 #include "HelloWorldScene.h"
+#include "ItemMenu.hpp"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
@@ -75,8 +76,12 @@ void TitleMenuLayer::menu(){
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         Director::getInstance()->replaceScene( StartMenuScene::create() );
     });
+    MenuItemLabel *label4 = MenuItemFont::create("アイテム",[](Ref *obj) {
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        Director::getInstance()->replaceScene( ItemMenuScene::create() );
+    });
     
-    Menu *menu = Menu::create(label1, label2, label3, NULL);
+    Menu *menu = Menu::create(label1, label2, label3, label4, NULL);
     
     menu->setColor( Color3B(444, 0, 0) );
     
