@@ -11,6 +11,9 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
+#include "cocos-ext.h"
+
+USING_NS_CC_EXT;
 
 class GuiUtilLayer : public cocos2d::LayerColor
 {
@@ -26,6 +29,7 @@ public:
     CREATE_FUNC(GuiUtilLayer);
     
     CC_SYNTHESIZE_READONLY(cocos2d::Label*, _label, Label);
+    
 };
 
 class GuiUtilScene : public cocos2d::Scene

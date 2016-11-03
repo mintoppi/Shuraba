@@ -9,6 +9,7 @@
 #include "GuiUtil.hpp"
 #include "StartMenu.h"
 #include "HelloWorldScene.h"
+#include "ScrollBarView.hpp"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
@@ -312,8 +313,46 @@ void GuiUtilLayer::createGuit(){
     //addSprite("ポーズボタン.png");
     //addSprite("ゲームオーバー1000.png");
 
-
+//    //画面サイズを取得
+//    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+//    
+//    //スクロールの表示範囲を画面いっぱいに設定
+//    ScrollView* pScrollView = ScrollView::create(winSize);
+//    this->addChild(pScrollView);
     
+    //背景画像を選択して、表示する場所（座標）を設定
+//    CCSprite* pImg = CCSprite::create("家.png");
+//    pImg->setScale(2.0, 2.0);
+//    pImg->setPosition(ccp(winSize.width*.5, winSize.height*.5));
+//    
+//    //背景画像をスクロールにセット
+//    pScrollView->setContainer(pImg);
+//    pScrollView->setContentSize(pImg->getContentSize());
+//    pScrollView->setContentOffset(CCPointZero, false);
+//    pScrollView->setMinScale(0.5f);
+//    pScrollView->setMaxScale(2.0f);
+//    
+//    pScrollView->setBounceable(false);
+    
+    //Size size = Size(visibleSize.width + origin.x, visibleSize.height + origin.y);
+//    Size size = Size(200, 200);
+//    ScrollView* sc = ScrollView::create(size);
+//    sc->setDirection(ScrollView::Direction::VERTICAL);
+//    sc->setContainer(pImg);
+//    sc->setContentSize(pImg->getContentSize());
+//    
+//    Size visibleSize = Director::getInstance()->getVisibleSize();
+//    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+//    
+//    sc->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+//    
+//    this->addChild(sc);
+//    
+//    ScrollBarView *bar = ScrollBarView::create(sc, ScrollBarView::BarType::VERTICAL_IN);
+    
+    
+    //this->addChild(m_scrollView);
+
     
     //addSprite("スーツ_止１前.png");
     //addSprite("おにぎり.png");
@@ -355,7 +394,7 @@ void GuiUtilLayer::createGuit(){
 
     //タッチ開始
     listener->onTouchBegan = [](Touch* touch, Event* event){
-        log("TouchBegan");
+        //log("TouchBegan");
         
         Point touchPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
         if(_targets.size() > 0){
@@ -366,7 +405,7 @@ void GuiUtilLayer::createGuit(){
                 if (target->getBoundingBox().containsPoint(touchPoint))
                 {
                     tTag = target->getTag();
-                    log("touch %d",tTag);
+                    //log("touch %d",tTag);
                 }
             }
         }
@@ -462,8 +501,8 @@ void GuiUtilLayer::createGuit(){
 
 bool GuiUtilLayer::init()
 {
-    if ( LayerColor::initWithColor(Color4B(0,0,0,0)))
-    //if ( LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
+    //if ( LayerColor::initWithColor(Color4B(0,0,0,0)))
+    if ( LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
     {
         return true;
     }
