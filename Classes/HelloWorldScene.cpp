@@ -375,9 +375,14 @@ int seih=bgh+361;
 int lifeh=seih+81;
 int infoh=lifeh+81;
 Sprite *yo1, *yo2 , *yo3, *yo4;
+//ParticleSystemQuad* particle;
 
 void HelloWorld::DrawScene(void){
     
+    //ParticleSystemQuad* particle = ParticleSystemQuad::create("player-aura.plist");
+    
+    //particle->setPosition(320,530);
+
     //settoku
     settokuOutput(0);
     
@@ -630,6 +635,8 @@ void HelloWorld::DrawScene(void){
         scoreLabel->setTag(200);
         this->addChild(scoreLabel);
     }
+    
+    //this->addChild(particle);
 }
 
 int se_ls;
@@ -1557,6 +1564,8 @@ void HelloWorld::gameOver()
 void HelloWorld::onTouchEnded(Touch* touches, Event* event)
 {
     
+    //particle->setPosition(touches->getLocation().x, touches->getLocation().y);
+    
     // Choose one of the touches to work with
     Touch* touch = touches;
     Point location = touch->getLocation();
@@ -1750,6 +1759,7 @@ void HelloWorld::onTouchEnded(Touch* touches, Event* event)
         //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("pew-pew-lei.wav");
         //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("bgm_maoudamashii_orchestra12.mp3");
     }
+    //particle->setPosition(touch->getLocation().x, touch->getLocation().y);
 }
 
 bool HelloWorld::onTouchBegan(cocos2d::Touch* touches, cocos2d::Event *unused_event)
@@ -1757,6 +1767,9 @@ bool HelloWorld::onTouchBegan(cocos2d::Touch* touches, cocos2d::Event *unused_ev
     Point location = touches->getLocationInView();
     location = CCDirector::getInstance()->convertToGL(location);
     log("%f %f" ,location.x, location.y);
+    //this->resetMotionStreak();
+    //CCPoint point = this->convertTouchToNodeSpace(touches);
+    //this->addMotionStreakPoint(point);
     return true;
 }
 
@@ -1771,6 +1784,8 @@ void HelloWorld::onTouchMoved(cocos2d::Touch *pTouches, cocos2d::Event *pEvent) 
     Point location = touch->getLocationInView();
     location = CCDirector::getInstance()->convertToGL(location);
     log("%f %f" ,location.x, location.y);
+    //CCPoint point = this->convertTouchToNodeSpace(pTouches);
+    //this->addMotionStreakPoint(point);
 }
 
 Sprite *damage;
@@ -1802,6 +1817,8 @@ void HelloWorld::updateGame(float dt)
                            player->getPosition().y - (player->getContentSize().height/2),
                            player->getContentSize().width,
                            player->getContentSize().height);
+    
+    //particle->setPosition(player->getPosition().x,player->getPosition().y);
     
     if((clear_seii[bgm_num] != 0) && s_num == clear_seii[bgm_num])
     {
@@ -2100,6 +2117,33 @@ void HelloWorld::removeDamage(float dt)
 {
     this->removeChildByTag(101);
     cd_flg = false;
+}
+
+int MOTION_STREAK_TAG = 8000;
+int m_iCount = 0;
+void HelloWorld::onEnter() {
+    CCNode::onEnter();
+    this->setTouchEnabled(true);
+    //CCDirector::getInstance()->gett getTouchDispatcher()->addTargetedDelegate(this, 1, true);
+}
+
+void HelloWorld::resetMotionStreak() {
+    this->removeChildByTag(MOTION_STREAK_TAG, true);
+    CCMotionStreak* streak = CCMotionStreak::create(0.5f, 1, 10, ccc3(255, 255, 0), "line.png");
+    this->addChild(streak, 5, MOTION_STREAK_TAG);
+}
+
+void HelloWorld::addMotionStreakPoint(cocos2d::CCPoint point) {
+    CCMotionStreak* streak = (CCMotionStreak*)this->getChildByTag(MOTION_STREAK_TAG);
+    streak->setPosition(point);
+    
+    if (++m_iCount>100) {
+        int r = rand()%256;
+        int b = rand()%265;
+        int g = rand()%256;
+        streak->setColor(ccc3(r, b, g));
+        m_iCount = 0;
+    }
 }
 
 //void HelloWorld::registerWithTouchDispatcher()

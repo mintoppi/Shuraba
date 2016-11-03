@@ -112,6 +112,10 @@ public:
     bool onTouchBegan(cocos2d::Touch* touches, cocos2d::Event *unused_event);
     void onTouchCancelled(cocos2d::Touch* touches, cocos2d::Event *unused_event);
     
+    void onEnter();
+    void resetMotionStreak();
+    void addMotionStreakPoint(cocos2d::CCPoint point);
+    
     int h_num;
     int s_num;
     bool oni_flg;
