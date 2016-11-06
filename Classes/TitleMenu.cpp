@@ -11,6 +11,7 @@
 #include "HelloWorldScene.h"
 #include "ItemMenu.hpp"
 #include "SimpleAudioEngine.h"
+#include "GameManager.hpp"
 #include "GuiUtil.hpp"
 
 using namespace cocos2d;
@@ -67,11 +68,13 @@ void TitleMenuLayer::menu(){
     
     MenuItemLabel *label1 = MenuItemFont::create("はじめから",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        Director::getInstance()->replaceScene( HelloWorld::scene((char*)"home") );
+        Director::getInstance()->replaceScene( HelloWorld::scene(0));
     });
     MenuItemLabel *label2 = MenuItemFont::create("続きから",[](Ref *obj) {
+        GameManager gm = *GameManager::getInstance();
+        int stage_no = gm.getStageNum();
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        Director::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
+        Director::getInstance()->replaceScene( HelloWorld::scene(stage_no));
     });
     MenuItemLabel *label3 = MenuItemFont::create("ストイックモード",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();

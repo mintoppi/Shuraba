@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "GameOverScene.h"
 #include "SimpleAudioEngine.h"
+#include "GameManager.hpp"
 #include "StartMenu.h"
 //#include <NendModule.h>
 
@@ -51,7 +52,7 @@ struct settsumonList {
 };
 
 bool first_flg=false;
-
+char* stage[25]={"home", "home", "home", "spring", "spring", "spring", "home", "home", "home", "summer", "summer", "summer", "home", "home", "home", "autumn", "autumn", "autumn", "home", "home", "home", "winter", "winter", "winter", "home"};
 char setsumons[50][1000]={
     "ジャムの蓋が空かないときどうすればいい,湯煎,よく振る,念じる" ,
     "ドライクリーニングで落ちる汚れは,油汚れ,泥汚れ,汗" ,
@@ -104,7 +105,7 @@ char setsumons[50][1000]={
     "パンツの黄ばみを消すには何入りの石鹸を使うとよい,ケイ酸塩,硝酸ナトリウム,リン酸カルシウム" ,
     "クエン酸と塩素系洗剤を混ぜるとどうなる,塩素ガスが発生,特になし,塩酸が生成" };
 
-static struct settsumonList sT[200];
+static struct settsumonList sT[50];
 
 void readSettoku2(){
     char *p = std::strtok(setsumons[0], ",");
@@ -151,22 +152,27 @@ void readSettoku2(){
 
 static struct settokuList sL[100];
 
-const CCString* season;
+String season;
 int seasons;
-Scene* HelloWorld::scene(char* stage)
+int stage_num2;
+Scene* HelloWorld::scene(int stage_num)
 {
-    season = CCString::create(stage);
-    if (season->compare("home") == 0) {
-        seasons=0;
-    } else if (season->compare("spring") == 0) {
-        seasons=1;
-    } else if (season->compare("summer") == 0) {
-        seasons=2;
-    } else if (season->compare("autumn") == 0) {
-        seasons=3;
-    } else if (season->compare("winter") == 0) {
-        seasons=4;
-    }
+    stage_num2 = stage_num;
+    season = stage[stage_num];
+    
+    GameManager gm = *GameManager::getInstance();
+    gm.setStageNum(stage_num);
+//    if (season.compare("home") == 0) {
+//        seasons=0;
+//    } else if (season.compare("spring") == 0) {
+//        seasons=1;
+//    } else if (season.compare("summer") == 0) {
+//        seasons=2;
+//    } else if (season.compare("autumn") == 0) {
+//        seasons=3;
+//    } else if (season.compare("winter") == 0) {
+//        seasons=4;
+//    }
     
     Scene * scene = NULL;
     do
@@ -236,6 +242,13 @@ bool init_flg;
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
+    char* stage_title;
+    sprintf(stage_title,"Stage %d   [%s round]",stage_num2, season.getCString());
+    CCLabelTTF *text = CCLabelTTF::create(stage_title, "Arial", 32);
+    text->setPosition(CCPointMake(200, 1100));
+    text->setColor(Color3B::BLACK);
+
+    this->addChild(text,3);
     
     //char apiKey[] = "14d053f4456ddde402acb72c1f81288bac66dcdd";
     //char spotID[] = "351624";
@@ -262,9 +275,11 @@ bool HelloWorld::init()
     s_num=START_SEII;
     touch_flg = true;
     cd_flg = false;
+    lifeup_flg = false;
     hou_flg=false;
     cuv_flg = false;
     bus_flg=false;
+    pause_flg=false;
     readSettoku();
     if(first_flg == false){
         readSettoku2();
@@ -399,14 +414,14 @@ void HelloWorld::DrawScene(void){
     
     if (screenSize.height > 960)
     {
-        if(season->compare("home") == 0){
+        if(season.compare("home") == 0){
             
             Sprite *bg = Sprite::create(bg0_gif, Rect(0, 0, 640, 640) );
             //bg->setScale(0.7);
             bg->setPosition(Point(320,580));
             this->addChild(bg);
             
-        }else if(season->compare("spring") == 0){
+        }else if(season.compare("spring") == 0){
             
             Sprite *bg = Sprite::create(bg1_gif, Rect(0, 0, 640, 640) );
             //bg->setScale(0.7);
@@ -559,7 +574,7 @@ void HelloWorld::DrawScene(void){
             action->setTag(804);
             yo4->runAction(action);
             
-        } else if(season->compare("summer") == 0){
+        } else if(season.compare("summer") == 0){
             
             Sprite *bg = Sprite::create(bg2_gif, Rect(0, 0, 640, 640) );
             //bg->setScale(0.7);
@@ -570,7 +585,7 @@ void HelloWorld::DrawScene(void){
             //bg->setScale(0.7);
             ps->setPosition(Point(320,780));
             this->addChild(ps, 2);
-        } else if(season->compare("autumn") == 0){
+        } else if(season.compare("autumn") == 0){
             
             Sprite *bg = Sprite::create(bg3_gif, Rect(0, 0, 640, 640) );
             //bg->setScale(0.7);
@@ -580,7 +595,7 @@ void HelloWorld::DrawScene(void){
             //            Sprite *hu = Sprite::create(hubuki_png);
             //            hu->setPosition(Point(100,540));
             //            this->addChild(hu);
-        } else if(season->compare("winter") == 0){
+        } else if(season.compare("winter") == 0){
             
             Sprite *bg = Sprite::create(bg4_gif, Rect(0, 0, 640, 640) );
             //bg->setScale(0.7);
@@ -610,10 +625,10 @@ void HelloWorld::DrawScene(void){
         
         
         //SCOREを表示
-        LabelTTF* scoreLabel = LabelTTF::create("0", settoku_font, 36.0f);
-        scoreLabel->setPosition(Point(470, lifeh+81));
-        scoreLabel->setTag(200);
-        this->addChild(scoreLabel);
+//        LabelTTF* scoreLabel = LabelTTF::create("0", settoku_font, 36.0f);
+//        scoreLabel->setPosition(Point(470, lifeh+81));
+//        scoreLabel->setTag(200);
+//        this->addChild(scoreLabel);
         
     }else{
         Sprite *bg = Sprite::create(bg1_gif, Rect(0, 0, 640, 640) );
@@ -934,9 +949,9 @@ void HelloWorld::InfoOutput(void){
     // info bg
     if (screenSize.height > 960)
     {
-        Sprite *info = Sprite::create(info_gif, Rect(0, 0, 642, 81) );
-        info->setPosition(Point(320,infoh));
-        this->addChild(info);
+//        Sprite *info = Sprite::create(info_gif, Rect(0, 0, 642, 81) );
+//        info->setPosition(Point(320,infoh));
+//        this->addChild(info);
     }
     else{
         //Sprite *info = Sprite::create(info_gif, Rect(0, 0, 640, 41) );
@@ -1069,6 +1084,7 @@ char *tonderu[20];
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
+    if(!pause_flg){
     char *p;
     int str_num=0;
     
@@ -1087,12 +1103,12 @@ void HelloWorld::addTarget()
     
     Sprite *target;
     if (oni_flg) {
-        target = Sprite::create("おにぎり.png", Rect(0,0,22,22) );
+        target = Sprite::create("おにぎり.png");
         target->setScale(1.5);
         target->setTag(999);
         oni_flg = false;
     }else if(hou_flg){
-        target = Sprite::create("ストック.png");
+        target = Sprite::create("包丁.png");
         target->setTag(4);
     }else{
         //log("this time : %f", elapsedTime);
@@ -1497,6 +1513,7 @@ void HelloWorld::addTarget()
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("投げる.mp3");
     bus_flg=false;
     hou_flg = false;
+    }
 }
 
 void HelloWorld::spriteMoveFinished(Node* sender)
@@ -1529,25 +1546,32 @@ void HelloWorld::gameOver()
 {
     GameOverScene *gameOverScene = GameOverScene::create();
     char a[100];
-    int score = (int)elapsedTime*5+s_num*20;
+    int score = (int)elapsedTime*5+s_num*20+h_num*10;
     int bonus = 0;
     
     //log("~~~~~~~~~~%d",BEST_SCORE);
     if (BEST_SCORE < score) {
+        BEST_SCORE = score;
         sprintf(a, "Score : %d\n BestScore : %d \n Update BEST SCORE!!",score,BEST_SCORE);
         gameOverScene->setScore(h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
-        BEST_SCORE = score;
+        log("heart %d, seii %d time %d, bonus %d,score %d, best %d",h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
         userDefault = CCUserDefault::sharedUserDefault();
+        int i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integerKey",0);
+        log("userdata best %d",i);
         userDefault->setIntegerForKey("integerKey", BEST_SCORE);
     }else{
         sprintf(a, "Score : %d\n BestScore : %d",score,BEST_SCORE);
+        userDefault = CCUserDefault::sharedUserDefault();
+        int i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integerKey",0);
+        log("heart %d, seii %d time %d, bonus %d,score %d, best %d",h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
+        log("userdata %d",i);
         gameOverScene->setScore(h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
     }
     //yo1->release();
     //yo2->release();
     //yo3->release();
     //yo4->release();
-    if (seasons == 1) {
+    if (season.compare("spring") == 0) {
         yo1->stopAllActions();
         yo2->stopAllActions();
         yo3->stopAllActions();
@@ -1596,16 +1620,47 @@ void HelloWorld::onTouchEnded(Touch* touches, Event* event)
                            640,
                            1136);
     
-    Rect RestartRect = Rect(615,
-                            1120,
+    Rect RestartRect = Rect(550,
+                            980,
+                            120,
+                            150);
+    
+    Rect KoukokuRect = Rect(0,
+                            0,
                             640,
-                            1136);
+                            110);
     
     if(RestartRect.containsPoint(ccp_loc)){
         //log("touch");
         //CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)season->getCString()));
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( StartMenuScene::create() );
+        
+        if(!pause_flg){
+            // 一時停止
+            //cocos2d::Director::getInstance()->pause();
+//            for (auto* childs : this->getChildren()){
+//                　Sprite *spriteChilds = (Sprite *)childs;
+//                　spriteChilds->pause();//———————–子供：ポーズ
+//                　for (auto* mago : spriteChilds->getChildren()){
+//                    　　Sprite *spriteMagos = (Sprite *)mago;
+//                    　　spriteMagos->pause();//——————–孫：ポーズ
+//                    　}
+//            }
+//            pause_flg = true;
+        }else{
+            // 一時停止を再開
+            //cocos2d::Director::getInstance()->resume();
+            
+//            for (auto* childs : this->getChildren()){
+//                　Sprite *spriteChilds = (Sprite *)childs;
+//                　spriteChilds->resume();//———————–子供：ポーズ
+//                　for (auto* mago : spriteChilds->getChildren()){
+//                    　　Sprite *spriteMagos = (Sprite *)mago;
+//                    　　spriteMagos->resume();//——————–孫：ポーズ
+//                    　}
+//            }
+        }
     }
     
     
@@ -1639,8 +1694,9 @@ void HelloWorld::onTouchEnded(Touch* touches, Event* event)
         
         //trueの場合に、何かしらの処理を行う
         //        log("++++++++touch State");
+    }else if(KoukokuRect.containsPoint(ccp_loc)){
     }else{
-        
+    
         
         //float duration =0.5f;
         //MoveTo* actionMove = MoveTo::create(duration, ccp_loc);
@@ -1788,7 +1844,7 @@ void HelloWorld::onTouchMoved(cocos2d::Touch *pTouches, cocos2d::Event *pEvent) 
     //this->addMotionStreakPoint(point);
 }
 
-Sprite *damage;
+Sprite *damage,*lifeup;
 
 int clear_seii[25]{0,0,4,0,0,6,0,0,8,0,0,10,0,0,12,0,0,14,0,0,16,0,0,18,20};
 int clear_time[25]{60,90,0,60,90,0,90,120,0,90,120,0,120,150,0,120,150,0,150,180,0,150,180,0,180};
@@ -1828,7 +1884,7 @@ void HelloWorld::updateGame(float dt)
         gameOver();
     }
     
-    if (seasons == 1) {
+    if (season.compare("spring") == 0) {
         //log("%i", seasons);
         
         if(yo1->boundingBox().intersectsRect(playerRect)){
@@ -1867,14 +1923,19 @@ void HelloWorld::updateGame(float dt)
             //log("%d %d",player->getPosition().x, player->getPosition().y);
             
             
-            
             if (target->boundingBox().intersectsRect(playerRect))
             {
                 if (target->getTag() == 999) {
-                    
-                    if (h_num < LIFE_MAX) {
-                        h_num++;
-                        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("おにぎり.mp3");
+                    if(!lifeup_flg){
+                        if (h_num < LIFE_MAX) {
+                            h_num++;
+                            lifeup = Sprite::create("アイコン-欲しがり屋さん.png");
+                            lifeup->setPosition(Point(player->getPositionX(), player->getPositionY()));
+                            this->scheduleOnce(schedule_selector(HelloWorld::removeDamage), 0.5);
+                            lifeup_flg = true;
+                            this->addChild(lifeup,3,998);
+                            CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("おにぎり.mp3");
+                        }
                     }
                 }else if(!cd_flg){
                     int touch = target->getTag();
@@ -1882,35 +1943,42 @@ void HelloWorld::updateGame(float dt)
                     if (h_num < 0) {
                         h_num = 0;
                     }
-                    //damage = Sprite::create("ダメージ.png");
-                    //damage->setPosition(Point(player->getPositionX(), player->getPositionY()));
-                    //this->scheduleOnce(schedule_selector(HelloWorld::removeDamage), 0.1);
-                    //cd_flg = true;
-                    //this->addChild(damage,3,101);
                     
                     switch (touch) {
                         case 1:
                             CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("当たる（軽）.mp3");
+                            damage = Sprite::create("ダメージ１.png");
                             break;
                         case 2:
                             CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("当たる（割）.mp3");
+                            damage = Sprite::create("ダメージ２.png");
                             break;
                         case 3:
                             CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("当たる（重）.mp3");
+                            damage = Sprite::create("ダメージ３.png");
                             break;
                         case 4:
                             CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("当たる（刺）.mp3");
+                            damage = Sprite::create("ダメージ３.png");
                             break;
                             
                         default:
                             break;
                     }
+                    damage->setPosition(Point(player->getPositionX(), player->getPositionY()));
+                    this->scheduleOnce(schedule_selector(HelloWorld::removeDamage), 0.5);
+
+                    cd_flg = true;
+                    this->addChild(damage,3,101);
                     
                     //log("~~~~~~~~~~~tag %d ",target->getTag());
                     if (h_num < 1) {
                         gameOver();
                     }
+                }else{
+                    damage->setPosition(Point(player->getPositionX(), player->getPositionY()));
                 }
+
 
                 
                 //heart
@@ -2073,8 +2141,9 @@ void HelloWorld::updateGame(float dt)
     LabelTTF* timerLabel = (LabelTTF*)this->getChildByTag(100);
     timerLabel->setString(timeString->getCString());
     
+    seasons = stage_num2;
     
-    if (seasons == 3 || seasons == 4) {
+    if (seasons == 15 || seasons == 16 || seasons == 17 || seasons == 21 || seasons == 22 || seasons == 23) {
         if ((int)(elapsedTime*10) % 10 == 0 && (int)elapsedTime % 7 == 0) {
             trap(seasons);
         }
@@ -2085,26 +2154,26 @@ void HelloWorld::updateGame(float dt)
     }
     
     //SCOREを表示する
-    CCString* scoreString = CCString::createWithFormat("%8.0d", (int)elapsedTime*5+s_num*20);
-    LabelTTF* scoreLabel = (LabelTTF*)this->getChildByTag(200);
-    scoreLabel->setString(scoreString->getCString());
+//    CCString* scoreString = CCString::createWithFormat("%8.0d", (int)elapsedTime*5+s_num*20);
+//    LabelTTF* scoreLabel = (LabelTTF*)this->getChildByTag(200);
+//    scoreLabel->setString(scoreString->getCString());
 }
 
 void HelloWorld::trap(int seasons)
 {
-    if (seasons == 3) {
+    if (seasons <= 17) {
         Sprite* otiba = Sprite::create(otiba_png);
         otiba->setPosition(Point(600,960));
         this->addChild(otiba);
         
         //Animation( *animation = Animation(::create();
         
-        otiba->runAction(MoveTo::create(5.0f, Point(0,-200)));
+        otiba->runAction(MoveTo::create(5.0f, Point(0,-300)));
         
         //        Animate *action = Animate::create(animation);
         //        CCRepeatForever *anime = CCRepeatForever::create(action);
         //        otiba->runAction(anime);
-    } else if (seasons == 4) {
+    } else if (seasons >= 21) {
         Sprite* hubuki = Sprite::create(hubuki_png);
         hubuki->setPosition(Point(-900,580));
         this->addChild(hubuki);
@@ -2115,8 +2184,13 @@ void HelloWorld::trap(int seasons)
 
 void HelloWorld::removeDamage(float dt)
 {
-    this->removeChildByTag(101);
-    cd_flg = false;
+    if(cd_flg){
+        cd_flg = false;
+        this->removeChildByTag(101);
+    }else if(lifeup_flg){
+        lifeup_flg = false;
+        this->removeChildByTag(998);
+    }
 }
 
 int MOTION_STREAK_TAG = 8000;

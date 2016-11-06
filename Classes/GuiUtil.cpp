@@ -79,6 +79,7 @@ void GuiUtilLayer::addSprite(const std::string filename, float scale){
     tagCount++;
 }
 
+Node* abc;
 void GuiUtilLayer::addSprite(const std::string filename, Point point){
     
     Sprite* player = Sprite::create(filename);
@@ -87,14 +88,40 @@ void GuiUtilLayer::addSprite(const std::string filename, Point point){
     player->setTag(tagCount);
     player->setName(filename);
     log("%s = %d", filename.c_str(), tagCount);
-    this->addChild(player);
+    abc->addChild(player);
+    _targets.pushBack(player);
+    tagCount++;
+}
+
+void GuiUtilLayer::addSprite(const std::string filename, const std::string filename2, Point point, std::function<void(Ref*)> callback ){
     
-    //_targets.pushBack(player);
-    //tagCount++;
+    MenuItemImage *pCloseItem = MenuItemImage::create(filename,      // 通常状態の画像
+                                                      filename2,    // 押下状態の画像
+                                                      callback);  // 押下時のアクション
+    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
+    pMenu->setPosition(point);
+    abc->addChild(pMenu, 1);
 }
 
 ParticleSystemQuad* particle2;
 void GuiUtilLayer::createGuit(){
+    abc = this->getParent();
+    
+    const ccMenuCallback callback = [](Ref * pSender){
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        Director::getInstance()->replaceScene( StartMenuScene::create() );
+    };
+    addSprite("タッチ用-次の面をプレイ.png", "タッチ用-次の面をプレイ2.png", Point(162.259079,240.160095), callback);
+    
+    particle2 = ParticleSystemQuad::create("player-aura.plist");
+    
+    particle2->setPosition(320,530);
+    
+    this->addChild(particle2);
+    
+    addSprite("タッチ用-次の面をプレイ.png",Point(162.259079,240.160095));
+    addSprite("タッチ用-セーブ.png",Point(479.737946,240.161957));
+    addSprite("アイテムカラム.png",Point(323.993103,987.852844));
     
     addSprite("アイコン-愛.png",2.00);
     addSprite("アイコン-根性.png",2.00);
@@ -106,7 +133,7 @@ void GuiUtilLayer::createGuit(){
     addSprite("アイコン-強烈な愛.png",2.00);
     addSprite("アイコン-永久根性.png",2.00);
     addSprite("アイコン-被害妄想.png",2.00);
-    addSprite("タッチ用-セーブ.png");
+//    addSprite("タッチ用-セーブ.png");
     addSprite("タッチ用-使用する.png");
     addSprite("アイコン-へなちょこ.png",2.00);
     addSprite("アイコン-永久気合い.png",2.00);
@@ -115,7 +142,7 @@ void GuiUtilLayer::createGuit(){
     addSprite("アイコン-猛烈な愛の嵐.png",2.00);
     addSprite("アイコン-欲しがり屋さん.png",2.00);
     addSprite("アイコン-話し合いで解決.png",2.00);
-    addSprite("タッチ用-次の面をプレイ.png");
+//    addSprite("タッチ用-次の面をプレイ.png");
     addSprite("アイコン-超気合いウルトラMA.png",2.00);
     addSprite("アイコン-全部受け止めてやる.png",2.00);
     addSprite("アイコン-止まって見えるぜ.png",2.00);
@@ -123,191 +150,193 @@ void GuiUtilLayer::createGuit(){
     addSprite("アイコン-ガチンコボディ.png",2.00);
     addSprite("アイコン-こんなとこで死ねるか.png",2.00);
     
-    addSprite("CD.png");
-    //addSprite("CloseNormal.png");
-    //addSprite("CloseSelected.png");
-    //addSprite("Default-568h@2x.png");
-    //addSprite("HelloWorld.png");
-    //addSprite("Icon-57.png");
-    //addSprite("LIFE.png");
-    //addSprite("LIFE_03-1.png");
-    //addSprite("LIFE_03.png");
-    addSprite("LIFEアイコン-a1.png");
-    addSprite("LIFEアイコン-a2.png");
-    addSprite("LIFEアイコン-a3.png");
-    addSprite("LIFEアイコン-d1.png");
-    addSprite("LIFEアイコン-d2.png");
-    addSprite("LIFEアイコン-d3.png");
-    addSprite("LIFEアイコン.png");
-    //addSprite("TIME.png");
-    //addSprite("TRUST.png");
-    addSprite("TRUSTアイコン-a1.png");
-    addSprite("TRUSTアイコン-a2.png");
-    addSprite("TRUSTアイコン-a3.png");
-    addSprite("TRUSTアイコン.png");
-    //addSprite("bar.png");
-    //addSprite("naifu.pnga");
-    //addSprite("naifu2.png");
-    //addSprite("家.png");
-    addSprite("本.png");
-    //addSprite("桜.png");
-    //addSprite("海.png");
-    addSprite("皿.png");
-    //addSprite("説明-1.png");
-    //addSprite("人死.png");
-    addSprite("包丁.png");
-    //addSprite("同情.png");
-    //addSprite("吹雪.png");
-    //addSprite("日光.png");
-    //addSprite("正解.png");
-    addSprite("花瓶.png");
-    //addSprite("花見.png");
-    //addSprite("設問.png");
-    //addSprite("説明.png");
-    addSprite("酒瓶.png");
-    //addSprite("説得1-1.png");
-    //addSprite("説得1-2.png");
-    //addSprite("説得1.png");
-    //addSprite("説得2-1.png");
-    //addSprite("説得2-2.png");
-    //addSprite("説得2.png");
-    //addSprite("説得3-1.png");
-    //addSprite("説得3-2.png");
-    //addSprite("説得3.png");
-    //addSprite("情報_02.png");
-    //addSprite("情報_02_2.png");
-    //addSprite("誠意_03-1.png");
-    //addSprite("背景_03.png");
-    //addSprite("誠意_03.png");
-    addSprite("私服_止１前.png");
-    addSprite("私服_止１右.png");
-    addSprite("私服_止１左.png");
-    addSprite("私服_止１後.png");
-    addSprite("私服_止２前.png");
-    addSprite("私服_止２右.png");
-    addSprite("私服_止２左.png");
-    addSprite("私服_止２後.png");
-    addSprite("私服_走１前.png");
-    addSprite("私服_走１右.png");
-    addSprite("私服_走１左.png");
-    addSprite("私服_走１後.png");
-    addSprite("私服_走２前.png");
-    addSprite("私服_走２右.png");
-    addSprite("私服_走２左.png");
-    addSprite("私服_走２後.png");
-    addSprite("私服_ダメージ.png");
-    //addSprite("クリア.png");
-    addSprite("スイカ.png");
-    //addSprite("タンス.png");
-    //addSprite("人止前.png");
-    //addSprite("人止右.png");
-    //addSprite("人止左.png");
-    //addSprite("人止後.png");
-    //addSprite("正解１.png");
-    //addSprite("正解２.png");
-    //addSprite("正解３.png");
-    addSprite("浮き輪.png");
-    addSprite("焼き鳥.png");
-    addSprite("空き缶.png");
-    //addSprite("答え１.png");
-    //addSprite("答え２.png");
-    //addSprite("答え３.png");
-    //addSprite("落ち葉.png");
-    addSprite("足あと.png");
-    //addSprite("クリア_2.png");
-    //addSprite("当たり_2.png");
-    addSprite("スーツ_止１前.png");
-    addSprite("スーツ_止１右.png");
-    addSprite("スーツ_止１左.png");
-    addSprite("スーツ_止１後.png");
-    addSprite("スーツ_止２前.png");
-    addSprite("スーツ_止２右.png");
-    addSprite("スーツ_止２左.png");
-    addSprite("スーツ_止２後.png");
-    addSprite("スーツ_走１前.png");
-    addSprite("スーツ_走１右.png");
-    addSprite("スーツ_走１左.png");
-    addSprite("スーツ_走１後.png");
-    addSprite("スーツ_走２前.png");
-    addSprite("スーツ_走２右.png");
-    addSprite("スーツ_走２左.png");
-    addSprite("スーツ_走２後.png");
-    addSprite("スーツ_ダメージ.png");
-    addSprite("ゴミ袋-1.png");
-    //addSprite("はずれ.png");
-    //addSprite("アイテム.png");
-    addSprite("ゴミ袋.png");
-    addSprite("コップ.png");
-    addSprite("ストック.png");
-    //addSprite("人走１前.png");
-    //addSprite("人走１右.png");
-    //addSprite("人走１左.png");
-    //addSprite("人走１後.png");
-    //addSprite("人走２前.png");
-    //addSprite("人走２右.png");
-    //addSprite("人走２左.png");
-    //addSprite("人走２後.png");
-    addSprite("はだか_止１前.png");
-    addSprite("はだか_止１右.png");
-    addSprite("はだか_止１左.png");
-    addSprite("はだか_止１後.png");
-    addSprite("はだか_止２前.png");
-    addSprite("はだか_止２右.png");
-    addSprite("はだか_止２左.png");
-    addSprite("はだか_止２後.png");
-    addSprite("はだか_走１前.png");
-    addSprite("はだか_走１右.png");
-    addSprite("はだか_走１左.png");
-    addSprite("はだか_走１後.png");
-    addSprite("はだか_走２前.png");
-    addSprite("はだか_走２右.png");
-    addSprite("はだか_走２左.png");
-    addSprite("はだか_走２後.png");
-    addSprite("海パン_止１前.png");
-    addSprite("海パン_止１右.png");
-    addSprite("海パン_止１左.png");
-    addSprite("海パン_止１後.png");
-    addSprite("海パン_止２前.png");
-    addSprite("海パン_止２右.png");
-    addSprite("海パン_止２左.png");
-    addSprite("海パン_止２後.png");
-    addSprite("海パン_走１前.png");
-    addSprite("海パン_走１右.png");
-    addSprite("海パン_走１左.png");
-    addSprite("海パン_走１後.png");
-    addSprite("海パン_走２前.png");
-    addSprite("海パン_走２右.png");
-    addSprite("海パン_走２左.png");
-    addSprite("海パン_走２後.png");
-    addSprite("はだか_ダメージ.png");
-    addSprite("海パン_ダメージ.png");
-    addSprite("おにぎり.png");
-    addSprite("はずれ１.png");
-    addSprite("はずれ２.png");
-    addSprite("はずれ３.png");
-    addSprite("クッション.png");
-    addSprite("スリッパ.png");
-    //addSprite("テーブル.png");
-    //addSprite("パラソル.png");
-    //addSprite("パンダ.png");
-    addSprite("ペナント.png");
-    addSprite("雪だるま.png");
-    //addSprite("雪玉（大）.png");
-    addSprite("雪玉（小）.png");
-    //addSprite("アイテム画面-下.png");
-    addSprite("みたらし団子.png");
-    //addSprite("ゲレンデ.png");
-    //addSprite("ダメージ.png");
-    addSprite("ニホンザル.png");
-    addSprite("思い出の写真.png");
-    addSprite("焼きもろこし.png");
-    addSprite("アイテムカラム.png");
-    addSprite("オードブル.png");
-    addSprite("スイカボール.png");
-    addSprite("ダメージ１.png");
-    addSprite("ダメージ２.png");
-    addSprite("ダメージ３.png");
-    addSprite("スノーボード.png");
+
+    
+//    addSprite("CD.png");
+//    //addSprite("CloseNormal.png");
+//    //addSprite("CloseSelected.png");
+//    //addSprite("Default-568h@2x.png");
+//    //addSprite("HelloWorld.png");
+//    //addSprite("Icon-57.png");
+//    //addSprite("LIFE.png");
+//    //addSprite("LIFE_03-1.png");
+//    //addSprite("LIFE_03.png");
+//    addSprite("LIFEアイコン-a1.png");
+//    addSprite("LIFEアイコン-a2.png");
+//    addSprite("LIFEアイコン-a3.png");
+//    addSprite("LIFEアイコン-d1.png");
+//    addSprite("LIFEアイコン-d2.png");
+//    addSprite("LIFEアイコン-d3.png");
+//    addSprite("LIFEアイコン.png");
+//    //addSprite("TIME.png");
+//    //addSprite("TRUST.png");
+//    addSprite("TRUSTアイコン-a1.png");
+//    addSprite("TRUSTアイコン-a2.png");
+//    addSprite("TRUSTアイコン-a3.png");
+//    addSprite("TRUSTアイコン.png");
+//    //addSprite("bar.png");
+//    //addSprite("naifu.pnga");
+//    //addSprite("naifu2.png");
+//    //addSprite("家.png");
+//    addSprite("本.png");
+//    //addSprite("桜.png");
+//    //addSprite("海.png");
+//    addSprite("皿.png");
+//    //addSprite("説明-1.png");
+//    //addSprite("人死.png");
+//    addSprite("包丁.png");
+//    //addSprite("同情.png");
+//    //addSprite("吹雪.png");
+//    //addSprite("日光.png");
+//    //addSprite("正解.png");
+//    addSprite("花瓶.png");
+//    //addSprite("花見.png");
+//    //addSprite("設問.png");
+//    //addSprite("説明.png");
+//    addSprite("酒瓶.png");
+//    //addSprite("説得1-1.png");
+//    //addSprite("説得1-2.png");
+//    //addSprite("説得1.png");
+//    //addSprite("説得2-1.png");
+//    //addSprite("説得2-2.png");
+//    //addSprite("説得2.png");
+//    //addSprite("説得3-1.png");
+//    //addSprite("説得3-2.png");
+//    //addSprite("説得3.png");
+//    //addSprite("情報_02.png");
+//    //addSprite("情報_02_2.png");
+//    //addSprite("誠意_03-1.png");
+//    //addSprite("背景_03.png");
+//    //addSprite("誠意_03.png");
+//    addSprite("私服_止１前.png");
+//    addSprite("私服_止１右.png");
+//    addSprite("私服_止１左.png");
+//    addSprite("私服_止１後.png");
+//    addSprite("私服_止２前.png");
+//    addSprite("私服_止２右.png");
+//    addSprite("私服_止２左.png");
+//    addSprite("私服_止２後.png");
+//    addSprite("私服_走１前.png");
+//    addSprite("私服_走１右.png");
+//    addSprite("私服_走１左.png");
+//    addSprite("私服_走１後.png");
+//    addSprite("私服_走２前.png");
+//    addSprite("私服_走２右.png");
+//    addSprite("私服_走２左.png");
+//    addSprite("私服_走２後.png");
+//    addSprite("私服_ダメージ.png");
+//    //addSprite("クリア.png");
+//    addSprite("スイカ.png");
+//    //addSprite("タンス.png");
+//    //addSprite("人止前.png");
+//    //addSprite("人止右.png");
+//    //addSprite("人止左.png");
+//    //addSprite("人止後.png");
+//    //addSprite("正解１.png");
+//    //addSprite("正解２.png");
+//    //addSprite("正解３.png");
+//    addSprite("浮き輪.png");
+//    addSprite("焼き鳥.png");
+//    addSprite("空き缶.png");
+//    //addSprite("答え１.png");
+//    //addSprite("答え２.png");
+//    //addSprite("答え３.png");
+//    //addSprite("落ち葉.png");
+//    addSprite("足あと.png");
+//    //addSprite("クリア_2.png");
+//    //addSprite("当たり_2.png");
+//    addSprite("スーツ_止１前.png");
+//    addSprite("スーツ_止１右.png");
+//    addSprite("スーツ_止１左.png");
+//    addSprite("スーツ_止１後.png");
+//    addSprite("スーツ_止２前.png");
+//    addSprite("スーツ_止２右.png");
+//    addSprite("スーツ_止２左.png");
+//    addSprite("スーツ_止２後.png");
+//    addSprite("スーツ_走１前.png");
+//    addSprite("スーツ_走１右.png");
+//    addSprite("スーツ_走１左.png");
+//    addSprite("スーツ_走１後.png");
+//    addSprite("スーツ_走２前.png");
+//    addSprite("スーツ_走２右.png");
+//    addSprite("スーツ_走２左.png");
+//    addSprite("スーツ_走２後.png");
+//    addSprite("スーツ_ダメージ.png");
+//    addSprite("ゴミ袋-1.png");
+//    //addSprite("はずれ.png");
+//    //addSprite("アイテム.png");
+//    addSprite("ゴミ袋.png");
+//    addSprite("コップ.png");
+//    addSprite("ストック.png");
+//    //addSprite("人走１前.png");
+//    //addSprite("人走１右.png");
+//    //addSprite("人走１左.png");
+//    //addSprite("人走１後.png");
+//    //addSprite("人走２前.png");
+//    //addSprite("人走２右.png");
+//    //addSprite("人走２左.png");
+//    //addSprite("人走２後.png");
+//    addSprite("はだか_止１前.png");
+//    addSprite("はだか_止１右.png");
+//    addSprite("はだか_止１左.png");
+//    addSprite("はだか_止１後.png");
+//    addSprite("はだか_止２前.png");
+//    addSprite("はだか_止２右.png");
+//    addSprite("はだか_止２左.png");
+//    addSprite("はだか_止２後.png");
+//    addSprite("はだか_走１前.png");
+//    addSprite("はだか_走１右.png");
+//    addSprite("はだか_走１左.png");
+//    addSprite("はだか_走１後.png");
+//    addSprite("はだか_走２前.png");
+//    addSprite("はだか_走２右.png");
+//    addSprite("はだか_走２左.png");
+//    addSprite("はだか_走２後.png");
+//    addSprite("海パン_止１前.png");
+//    addSprite("海パン_止１右.png");
+//    addSprite("海パン_止１左.png");
+//    addSprite("海パン_止１後.png");
+//    addSprite("海パン_止２前.png");
+//    addSprite("海パン_止２右.png");
+//    addSprite("海パン_止２左.png");
+//    addSprite("海パン_止２後.png");
+//    addSprite("海パン_走１前.png");
+//    addSprite("海パン_走１右.png");
+//    addSprite("海パン_走１左.png");
+//    addSprite("海パン_走１後.png");
+//    addSprite("海パン_走２前.png");
+//    addSprite("海パン_走２右.png");
+//    addSprite("海パン_走２左.png");
+//    addSprite("海パン_走２後.png");
+//    addSprite("はだか_ダメージ.png");
+//    addSprite("海パン_ダメージ.png");
+//    addSprite("おにぎり.png");
+//    addSprite("はずれ１.png");
+//    addSprite("はずれ２.png");
+//    addSprite("はずれ３.png");
+//    addSprite("クッション.png");
+//    addSprite("スリッパ.png");
+//    //addSprite("テーブル.png");
+//    //addSprite("パラソル.png");
+//    //addSprite("パンダ.png");
+//    addSprite("ペナント.png");
+//    addSprite("雪だるま.png");
+//    //addSprite("雪玉（大）.png");
+//    addSprite("雪玉（小）.png");
+//    //addSprite("アイテム画面-下.png");
+//    addSprite("みたらし団子.png");
+//    //addSprite("ゲレンデ.png");
+//    //addSprite("ダメージ.png");
+//    addSprite("ニホンザル.png");
+//    addSprite("思い出の写真.png");
+//    addSprite("焼きもろこし.png");
+//    addSprite("アイテムカラム.png");
+//    addSprite("オードブル.png");
+//    addSprite("スイカボール.png");
+//    addSprite("ダメージ１.png");
+//    addSprite("ダメージ２.png");
+//    addSprite("ダメージ３.png");
+//    addSprite("スノーボード.png");
     //addSprite("ゲームオーバー.png");
     //addSprite("バランスボール.png");
     //addSprite("ポーズボタン.png");
@@ -382,12 +411,6 @@ void GuiUtilLayer::createGuit(){
 //
 //    particle->setPosition(320,0);
 //    this->addChild(particle);
-    
-    particle2 = ParticleSystemQuad::create("player-aura.plist");
-    
-    particle2->setPosition(320,530);
-    
-        this->addChild(particle2);
     
     //イベントリスナーを作成
     auto listener = EventListenerTouchOneByOne::create();
@@ -485,7 +508,7 @@ void GuiUtilLayer::createGuit(){
                 Sprite* target = (*jt);
                 if(target->getTag() == tTag){
                     Point touchPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
-                    log("addSprite(\"%s\",Point(%f,%f));", target->getName().c_str(),touchPoint.x, touchPoint.y);
+                    log("addSprite(\"%s\",Point(%f,%f), this->getParent());", target->getName().c_str(), target->getPositionX(), target->getPositionY());
                 }
             }
         }
@@ -499,10 +522,14 @@ void GuiUtilLayer::createGuit(){
     //this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
 }
 
+bool GuiUtilLayer::setNode(Node* tNode){
+        abc = tNode;
+}
+
 bool GuiUtilLayer::init()
 {
-    //if ( LayerColor::initWithColor(Color4B(0,0,0,0)))
-    if ( LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
+    if ( LayerColor::initWithColor(Color4B(0,0,0,0)))
+    //if ( LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
     {
         return true;
     }

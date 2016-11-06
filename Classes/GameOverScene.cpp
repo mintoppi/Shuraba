@@ -25,6 +25,7 @@
 
 #include "GameOverScene.h"
 #include "HelloWorldScene.h"
+#include "GameManager.hpp"
 #include "StartMenu.h"
 //#include "curl.h"
 
@@ -77,12 +78,15 @@ bool c_flg = false;
 char labels[200];
 char labels2[200];
 Size winSize;
-int heart,trust, time2, bonus, score, best_score;
-char* stage[25]={"home", "home", "home", "spring", "spring", "spring", "home", "home", "home", "summer", "summer", "summer", "home", "home", "home", "autumn", "autumn", "autumn", "home", "home", "home", "winter", "winter", "winter", "home"};
+int heart,trust, time2, bonus, score, score2, best_score;
+//char* stage[25]={"home", "home", "home", "spring", "spring", "spring", "home", "home", "home", "summer", "summer", "summer", "home", "home", "home", "autumn", "autumn", "autumn", "home", "home", "home", "winter", "winter", "winter", "home"};
 int stage_num=0;
+bool touch_flg = false;
 void GameOverLayer::setScore(int l_heart, int l_trust, int l_time, int l_bonus, int l_score, int l_best_score){
     
     se=false;
+    touch_flg = false;
+    score2 = 0;
     heart = l_heart;
     trust = l_trust;
     time2 = l_time;
@@ -128,39 +132,58 @@ void GameOverLayer::setScore(int l_heart, int l_trust, int l_time, int l_bonus, 
 
     //CCLog("Score : %d\n BestScore : %d \n Update BEST SCORE!!", scores, BEST_SCORE);
     if(clear_flg){
-    if (best_score < score) {
-        sprintf(labels, "Score : %d\n BestScore : %d \n Update BEST SCORE!!",score,score);
-    }else{
+//        if (best_score < score) {
+//            //sprintf(labels, "Score : %d\n BestScore : %d \n Update BEST SCORE!!",score,score);
+//            //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+//            sprintf(labels, "LIFE\nTRUST\nTIME\nBONUS\nGet Score\nAll Score\nHIGH Score \n Update BEST SCORE!!");
+//            sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, 0, 0, best_score);
+//        }else{
+//            sprintf(labels, "LIFE\nTRUST\nTIME\nBONUS\nGet Score\nAll Score\nHIGH Score");
+//            sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, 0, 0, best_score);
+//            //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+//        }
+        
         sprintf(labels, "LIFE\nTRUST\nTIME\nBONUS\nGet Score\nAll Score\nHIGH Score");
         sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, 0, 0, best_score);
+        
+        this->_label = LabelTTF::create(labels,"arial", 32);
+        this->_label->setHorizontalAlignment(cocos2d::TextHAlignment::RIGHT);
+        _label->retain();
+        _label->setColor( Color3B(0, 0, 1000) );
+        _label->setPosition( Point(winSize.width/2-80, 550) );
+        this->addChild(_label);
+        
+        this->_label = CCLabelTTF::create(labels2,"arial", 32);
+        this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
+        _label->retain();
+        _label->setColor( Color3B(0, 0, 1000) );
+        _label->setPosition( Point(winSize.width/2+70, 550) );
+        this->addChild(_label);
+        
+        
+        //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+//        this->_label = LabelTTF::create(labels,"arial", 32);
+//        this->_label->setHorizontalAlignment(cocos2d::TextHAlignment::RIGHT);
+//        _label->retain();
+//        _label->setColor( Color3B(0, 0, 1000) );
+//        _label->setPosition( Point(winSize.width/2-80, 550) );
+//        this->addChild(_label);
+        
     }
-
-    
-    //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
-    this->_label = LabelTTF::create(labels,"arial", 32);
-    this->_label->setHorizontalAlignment(cocos2d::TextHAlignment::RIGHT);
-    _label->retain();
-    _label->setColor( Color3B(0, 0, 1000) );
-    _label->setPosition( Point(winSize.width/2-80, 550) );
-    this->addChild(_label);
-    
-    this->_label = CCLabelTTF::create(labels2,"arial", 32);
-    this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
-    _label->retain();
-    _label->setColor( Color3B(0, 0, 1000) );
-    _label->setPosition( Point(winSize.width/2+70, 550) );
-    this->addChild(_label);
-        }
     
     MenuItemLabel *label = MenuItemFont::create("STAGE SELECT",[&](Ref *sender) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( StartMenuScene::create() );
     });
     
+        GameManager gm = *GameManager::getInstance();
+        stage_num = gm.getStageNum();
         stage_num = (stage_num + 1) % 25;
     MenuItemLabel *label2 = MenuItemFont::create("NextStage",[&](Ref *sender) {
+        GameManager gm = *GameManager::getInstance();
+        gm.setStageNum(stage_num);
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)stage[stage_num]) );
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(stage_num));
     });
 
     Menu *menu = Menu::create(label, label2, NULL);
@@ -181,11 +204,33 @@ void GameOverLayer::setScore(int l_heart, int l_trust, int l_time, int l_bonus, 
     
     
     if (score >= CLEAR_SCORE) {
-        death = Sprite::create("ゲームオーバー1000.gif" );
+        //death = Sprite::create("ゲームオーバー1000.gif");
         //ParticleSystemQuad* particle = ParticleSystemQuad::create("HelloParticle.plist");
         //particle->setPosition(320,0);
         //this->addChild(particle);
     }
+    
+    //イベントリスナーを作成
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    //タッチ開始
+    listener->onTouchBegan = [](Touch* touch, Event* event){
+        //log("TouchBegan");
+        return true;
+    };
+    
+    //タッチ中
+    listener->onTouchMoved = [](Touch* touch, Event* event){
+    };
+    
+    //タッチ終了
+    listener->onTouchEnded = [](Touch* touch, Event* event){
+        log("TouchEnded");
+        touch_flg = true;
+    };
+    
+    //イベントリスナーを登録
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 int dt=0;
@@ -193,7 +238,7 @@ void GameOverLayer::update(float delta){
     
     dt++;
     int sound;
-    if(clear_flg){
+    if(touch_flg){
     if ((dt%6 == 0) && c_flg) {
         if(!se){
             se=true;
@@ -208,17 +253,21 @@ void GameOverLayer::update(float delta){
         this->addChild(_label);
         if (heart>0) {
             heart--;
-            score = score + 20;
+            score2 = score2 + 10;
+            log("heart");
         }
         else if (trust>0) {
             trust--;
-            score = score + 10;
+            score2 = score2 + 20;
+                        log("tr");
         }
         else if (time2>0) {
             time2--;
-            score = score + 5;
+            score2 = score2 + 5;
+                        log("time");
         }
-        sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, score, score+bonus, best_score);
+        log("score2 = %d",score2);
+        sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, score2, score2+bonus, best_score);
         this->_label = CCLabelTTF::create(labels2,"arial", 32);
         this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
         _label->retain();

@@ -80,24 +80,24 @@ void StartMenuLayer::menu(){
     MenuItemFont::setFontName("AppleGothic");
     MenuItemLabel *label  = MenuItemFont::create("Modern her               HISCORE",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"home") );
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(0));
     });
     MenuItemLabel *label2 = MenuItemFont::create("Spring Lover             HISCORE",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"spring") );
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(3));
     });
     
     MenuItemLabel *label3 = MenuItemFont::create("Yes, Summerdays          HISCORE",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"summer") );
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(9));
     });
     MenuItemLabel *label4 = MenuItemFont::create("Goodbye of Autumn day    HISCORE",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"autumn") );
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(15));
     });
     MenuItemLabel *label5 = MenuItemFont::create("Winter, Again            HISCORE",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"winter") );
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(21));
     });
     
     MenuItemLabel *label6 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
@@ -177,31 +177,31 @@ void StartMenuLayer::menu(){
 void StartMenuLayer::gameStartHome(char* stage)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"home") );
+	CCDirector::getInstance()->replaceScene( HelloWorld::scene(0));
 }
 
 void StartMenuLayer::gameStartSpring(char* stage)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"spring") );
+	CCDirector::getInstance()->replaceScene( HelloWorld::scene(6));
 }
 
 void StartMenuLayer::gameStartSummer(char* stage)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"summer") );
+	CCDirector::getInstance()->replaceScene( HelloWorld::scene(12));
 }
 
 void StartMenuLayer::gameStartAutumn(char* stage)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)"autumn") );
+	CCDirector::getInstance()->replaceScene( HelloWorld::scene(18));
 }
 
 void StartMenuLayer::gameStartWinter(char* stage)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	CCDirector::getInstance()->replaceScene( HelloWorld::scene("winter") );
+	CCDirector::getInstance()->replaceScene( HelloWorld::scene(24));
 
 }
 

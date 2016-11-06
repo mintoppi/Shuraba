@@ -43,7 +43,7 @@
 #define doujou_gif "同情_2.jpg"
 
 #define LIFE_MAX 20
-#define START_LIFE 15
+#define START_LIFE 3
 #define SEII_MAX 20
 #define START_SEII 0
 #define LEVEL_TIME 30
@@ -64,7 +64,7 @@ public:
     virtual bool init();
     
     // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-    static cocos2d::Scene* scene(char* stage);
+    static cocos2d::Scene* scene(int stage_no);
     
     // a selector callback
     virtual void menuCloseCallback(cocos2d::Object* pSender);
@@ -123,7 +123,9 @@ public:
     bool cuv_flg;
     bool bus_flg;
     bool cd_flg;
+    bool lifeup_flg;
     bool touch_flg;
+    bool pause_flg;
     
     float elapsedTime; //経過時間
     
