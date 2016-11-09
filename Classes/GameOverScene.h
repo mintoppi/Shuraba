@@ -31,7 +31,7 @@
 #define clear_png "クリア.png"
 //#define clear_png "ゲームオーバー.png"
 //#define clear_png "エンドロール.png"
-#define CLEAR_SCORE 100
+#define CLEAR_SCORE 10
 
 class GameOverLayer : public cocos2d::LayerColor
 {

@@ -97,10 +97,12 @@ void GameOverLayer::setScore(int l_heart, int l_trust, int l_time, int l_bonus, 
     winSize = CCDirector::getInstance()->getWinSize();
     Sprite *death;
     if (score > CLEAR_SCORE) {
+        CCLayerColor::initWithColor( Color4B(255,255,255,255));
         //death = Sprite::create("ゲームオーバー.gif" );
         death = Sprite::create(clear_png);
     }else{
-        death = Sprite::create("ゲームオーバー1000.jpg" );
+        CCLayerColor::initWithColor( Color4B(0,0,0,0));
+        death = Sprite::create("ゲームオーバー.png" );
     }
     
     Size screenSize = winSize;
@@ -288,51 +290,53 @@ void GameOverLayer::update(float delta){
 
 bool GameOverLayer::init()
 {
-	if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
-	{
+    //	if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+    
+    if(CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+    {
         //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("死.mp3");
         this->scheduleUpdate();
         
-//        Size visibleSize = CCDirector::getInstance()->getVisibleSize();
-//        CCPoint origin = CCDirector::getInstance()->getVisibleOrigin();
-//        
-//        MenuItemImage *pCloseItem = MenuItemImage::create(
-//                                                              "CloseNormal.png",
-//                                                              "CloseSelected.png",
-//                                                              this,
-//                                                              menu_selector(GameOverLayer::gameOverDone));
-//        
-//        pCloseItem->setPosition(Point(300,400));
-//        
-//        // create menu, it's an autorelease object
-//        Menu* pMenu = Menu::create(pCloseItem, NULL);
-//        pMenu->setPosition(CCPointZero);
-//        this->addChild(pMenu, 1);
+        //        Size visibleSize = CCDirector::getInstance()->getVisibleSize();
+        //        CCPoint origin = CCDirector::getInstance()->getVisibleOrigin();
+        //
+        //        MenuItemImage *pCloseItem = MenuItemImage::create(
+        //                                                              "CloseNormal.png",
+        //                                                              "CloseSelected.png",
+        //                                                              this,
+        //                                                              menu_selector(GameOverLayer::gameOverDone));
+        //
+        //        pCloseItem->setPosition(Point(300,400));
+        //
+        //        // create menu, it's an autorelease object
+        //        Menu* pMenu = Menu::create(pCloseItem, NULL);
+        //        pMenu->setPosition(CCPointZero);
+        //        this->addChild(pMenu, 1);
         
-
+        
         
         // death bg
         
-//        Sprite *death = Sprite::create("人死.gif", CCRectMake(0, 0, 89, 56) );
-//        death->setPosition(Point(315, winSize.height/2+45) );
-//        this->addChild(death);
-//        
-//        Sprite *death2 = Sprite::create("ダメージ.gif", CCRectMake(0, 0, 72, 73) );
-//        death2->setPosition(Point(315, winSize.height/2+80) );
-//        this->addChild(death2);
-		
-//		this->runAction( CCSequence::create(
-//                                CCDelayTime::create(5),
-//                                CCCallFunc::create(this, 
-//                                callfunc_selector(GameOverLayer::gameOverDone)),
-//                                NULL));
-		
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+        //        Sprite *death = Sprite::create("人死.gif", CCRectMake(0, 0, 89, 56) );
+        //        death->setPosition(Point(315, winSize.height/2+45) );
+        //        this->addChild(death);
+        //
+        //        Sprite *death2 = Sprite::create("ダメージ.gif", CCRectMake(0, 0, 72, 73) );
+        //        death2->setPosition(Point(315, winSize.height/2+80) );
+        //        this->addChild(death2);
+        
+        //		this->runAction( CCSequence::create(
+        //                                CCDelayTime::create(5),
+        //                                CCCallFunc::create(this,
+        //                                callfunc_selector(GameOverLayer::gameOverDone)),
+        //                                NULL));
+        
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //static char errorBuffer[CURL_ERROR_SIZE];

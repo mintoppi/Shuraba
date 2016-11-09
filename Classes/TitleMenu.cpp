@@ -80,16 +80,17 @@ void TitleMenuLayer::menu(){
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         Director::getInstance()->replaceScene( StartMenuScene::create() );
     });
-    MenuItemLabel *label4 = MenuItemFont::create("アイテム",[](Ref *obj) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        Director::getInstance()->replaceScene( ItemMenuScene::create() );
-    });
-    MenuItemLabel *label5 = MenuItemFont::create("GUI",[](Ref *obj) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        Director::getInstance()->replaceScene( GuiUtilScene::create() );
-    });
-    
-    Menu *menu = Menu::create(label1, label2, label3, label4, label5, NULL);
+//    MenuItemLabel *label4 = MenuItemFont::create("アイテム",[](Ref *obj) {
+//        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+//        Director::getInstance()->replaceScene( ItemMenuScene::create() );
+//    });
+//    MenuItemLabel *label5 = MenuItemFont::create("GUI",[](Ref *obj) {
+//        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+//        Director::getInstance()->replaceScene( GuiUtilScene::create() );
+//    });
+    Menu *menu = Menu::create(label1, label2, label3, NULL);
+
+//    Menu *menu = Menu::create(label1, label2, label3, label4, label5, NULL);
     
     menu->setColor( Color3B(444, 0, 0) );
     

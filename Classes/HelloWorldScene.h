@@ -38,12 +38,12 @@
 
 #define player_png "人止前.png"
 
-#define seikai_gif "当たり_2.jpg"
-#define hazure_gif "はずれ_2.jpg"
+#define seikai_gif "正解２.png"
+#define hazure_gif "はずれ２.png"
 #define doujou_gif "同情_2.jpg"
 
 #define LIFE_MAX 20
-#define START_LIFE 3
+#define START_LIFE 10
 #define SEII_MAX 20
 #define START_SEII 0
 #define LEVEL_TIME 30

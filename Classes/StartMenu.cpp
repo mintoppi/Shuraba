@@ -78,33 +78,40 @@ void StartMenuLayer::menu(){
     //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Opening.mp3", true);
 
     MenuItemFont::setFontName("AppleGothic");
-    MenuItemLabel *label  = MenuItemFont::create("Modern her               HISCORE",[](Ref *obj) {
+    MenuItemLabel *label  = MenuItemFont::create("Modern her",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( HelloWorld::scene(0));
     });
-    MenuItemLabel *label2 = MenuItemFont::create("Spring Lover             HISCORE",[](Ref *obj) {
+    MenuItemLabel *label2 = MenuItemFont::create("Spring Lover",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( HelloWorld::scene(3));
     });
     
-    MenuItemLabel *label3 = MenuItemFont::create("Yes, Summerdays          HISCORE",[](Ref *obj) {
+    MenuItemLabel *label3 = MenuItemFont::create("Yes, Summerdays",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( HelloWorld::scene(9));
     });
-    MenuItemLabel *label4 = MenuItemFont::create("Goodbye of Autumn day    HISCORE",[](Ref *obj) {
+    MenuItemLabel *label4 = MenuItemFont::create("Goodbye of Autumn day",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( HelloWorld::scene(15));
     });
-    MenuItemLabel *label5 = MenuItemFont::create("Winter, Again            HISCORE",[](Ref *obj) {
+    MenuItemLabel *label5 = MenuItemFont::create("Winter, Again",[](Ref *obj) {
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         CCDirector::getInstance()->replaceScene( HelloWorld::scene(21));
     });
     
-    MenuItemLabel *label6 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
-        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
-    });
+//    MenuItemLabel *label6 = MenuItemFont::create("HISCORE TOTAL",[](Ref *obj) {
+//        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+//        CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
+//    });
     
+        MenuItemLabel *label6 = MenuItemFont::create("ストーリーモード",[](Ref *obj) {
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+            CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
+        });
+    
+//    Menu *menu = Menu::create(label, label2, label3, label4, label5, NULL);
+
     Menu *menu = Menu::create(label, label2, label3, label4, label5, label6, NULL);
     
     menu->setColor( Color3B(444, 0, 0) );

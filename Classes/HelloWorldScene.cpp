@@ -2,6 +2,7 @@
 #include "GameOverScene.h"
 #include "SimpleAudioEngine.h"
 #include "GameManager.hpp"
+#include "TitleMenu.h"
 #include "StartMenu.h"
 //#include <NendModule.h>
 
@@ -243,7 +244,7 @@ bool init_flg;
 bool HelloWorld::init()
 {
     char* stage_title;
-    sprintf(stage_title,"Stage %d   [%s round]",stage_num2, season.getCString());
+    sprintf(stage_title,"Stage %d   [%s round]",(stage_num2+1), season.getCString());
     CCLabelTTF *text = CCLabelTTF::create(stage_title, "Arial", 32);
     text->setPosition(CCPointMake(200, 1100));
     text->setColor(Color3B::BLACK);
@@ -372,8 +373,10 @@ bool HelloWorld::init()
         //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("background-music-aac.wav", true);
         CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.7);
         char* stage_bgm[25]={"春は揚げ物.mp3", "春は揚げ物.mp3", "死逃.mp3", "春は揚げ物.mp3", "春は揚げ物.mp3", "死逃.mp3", "夏は酔う.mp3", "夏は酔う.mp3", "死逃.mp3", "夏は酔う.mp3", "夏は酔う.mp3", "死逃.mp3", "秋は靴ずれ.mp3", "秋は靴ずれ.mp3", "死逃.mp3", "秋は靴ずれ.mp3", "秋は靴ずれ.mp3", "死逃.mp3", "冬は萎めて.mp3", "冬は萎めて.mp3", "死逃.mp3", "冬は萎めて.mp3", "冬は萎めて.mp3", "死逃.mp3", "LAST ESCAPE.mp3"};
+        bgm_num = stage_num2;
         CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(stage_bgm[bgm_num], true);
-        bgm_num = (bgm_num +1) % 25;
+        //bgm_num = (bgm_num +1) % 25;
+
         init_flg = false;
         //CCLOG("-----------[%i]---------",bgm_num);
         bRet = true;
@@ -450,7 +453,7 @@ void HelloWorld::DrawScene(void){
             this->addChild(yo3);
             
             yo4 = Sprite::create(yopparai1_png);
-            yo4->setPosition(Point(550,550));
+            yo4->setPosition(Point(550,640));
             this->addChild(yo4);
             
             //cocos2dx2.x
@@ -1016,8 +1019,8 @@ void HelloWorld::AnserOutput(int touchNum){
             }
         }else if(hf == 2){
             CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("はずれ.mp3");
-            Anser = Sprite::create(hazure_gif, Rect(0, 0, 212, 80) );
-            //Anser->setScale(0.8);
+            Anser = Sprite::create(hazure_gif, Rect(0, 0, 212, 90) );
+            Anser->setScale(1.7,0.9);
             hou_flg = true;
         }else if(hf == 3){
             CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("同情.mp3");
@@ -1027,8 +1030,12 @@ void HelloWorld::AnserOutput(int touchNum){
         touch_flg = false;
         this->scheduleOnce(schedule_selector(HelloWorld::changeSettoku), 2.0);
         
-        
-        Anser->setPosition(Point(105+((touchNum-1)*214),seh));
+        if(hou_flg){
+            Anser->setPosition(Point(185+((touchNum-1)*214),seh));
+        }
+        else{
+            Anser->setPosition(Point(105+((touchNum-1)*214),seh));
+        }
         this->addChild(Anser);
         
     }else{
@@ -1069,31 +1076,44 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 }
 
 int hirai_num[25]={0,0,0,4,4,4,1,1,1,5,5,5,2,2,2,6,6,6,3,3,3,7,7,7,8};
-char hirai[9][3000]={
-    "クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png",
-    "クッション.png,バランスボール.png,コップ.png,花瓶.png,CD.png",
-    "コップ.png,バランスボール.png,CD.png,皿.png,テーブル.png",
-    "本.png,CD.png,皿.png,テーブル.png,タンス.png",
-    "空き缶.png,ゴミ袋.png,オードブル.png,焼き鳥.png,酒瓶.png",
-    "空き缶.png,焼きもろこし.png,浮き輪.png,スイカボール.png,スイカ.png",
-    "ゴミ袋.png,酒瓶.png,ペナント.png,みたらし団子.png,ニホンザル.png",
-    "ストック.png,スノーボード.png,雪だるま.png,雪玉（小）.png,雪玉（大）.png",
-    "クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png,バランスボール.png,CD.png,皿.png,テーブル.png,タンス.png,空き缶.png,ゴミ袋.png,オードブル.png,焼き鳥.png,酒瓶.png,焼きもろこし.png,浮き輪.png,スイカボール.png,スイカ.png,ペナント.png,みたらし団子.png,ニホンザル.png,ストック.png,スノーボード.png,雪だるま.png,雪玉（小）.png,雪玉（大）.png"};
+//char hirai[9][200]={
+//    "クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png",
+//    "クッション.png,バランスボール.png,コップ.png,花瓶.png,CD.png",
+//    "コップ.png,バランスボール.png,CD.png,皿.png,テーブル.png",
+//    "本.png,CD.png,皿.png,テーブル.png,タンス.png",
+//    "空き缶.png,ゴミ袋.png,オードブル.png,焼き鳥.png,酒瓶.png",
+//    "空き缶.png,焼きもろこし.png,浮き輪.png,スイカボール.png,スイカ.png",
+//    "ゴミ袋.png,酒瓶.png,ペナント.png,みたらし団子.png,ニホンザル.png",
+//    "ストック.png,スノーボード.png,雪だるま.png,雪玉（小）.png,雪玉（大）.png",
+//        "クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png,バランスボール.png,CD.png,皿.png,テーブル.png,タンス.png"};
+    //"クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png,バランスボール.png,CD.png,皿.png,テーブル.png,タンス.png,空き缶.png,ゴミ袋.png,オードブル.png,焼き鳥.png,酒瓶.png,焼きもろこし.png,浮き輪.png,スイカボール.png,スイカ.png,ペナント.png,みたらし団子.png,ニホンザル.png,ストック.png,スノーボード.png,雪だるま.png,雪玉（小）.png,雪玉（大）.png"};
 
 char *tonderu[20];
 // cpp with cocos2d-x
 void HelloWorld::addTarget()
 {
+    bgm_num = stage_num2;
     if(!pause_flg){
     char *p;
     int str_num=0;
     
     if (init_flg == false) {
-        p = std::strtok(hirai[hirai_num[bgm_num-1]], ",");
+        char hirai[9][500]={
+            "クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png",
+            "クッション.png,バランスボール.png,コップ.png,花瓶.png,CD.png",
+            "コップ.png,バランスボール.png,CD.png,皿.png,テーブル.png",
+            "本.png,CD.png,皿.png,テーブル.png,タンス.png",
+            "空き缶.png,ゴミ袋.png,オードブル.png,焼き鳥.png,酒瓶.png",
+            "空き缶.png,焼きもろこし.png,浮き輪.png,スイカボール.png,スイカ.png",
+            "ゴミ袋.png,酒瓶.png,ペナント.png,みたらし団子.png,ニホンザル.png",
+            "ストック.png,スノーボード.png,雪だるま.png,雪玉（小）.png,雪玉（大）.png",
+            "クッション.png,スリッパ.png,本.png,コップ.png,花瓶.png,バランスボール.png,CD.png,皿.png,テーブル.png,タンス.png,空き缶.png,ゴミ袋.png,オードブル.png,焼き鳥.png,酒瓶.png,焼きもろこし.png,浮き輪.png,スイカボール.png,スイカ.png,ペナント.png,みたらし団子.png,ニホンザル.png,ストック.png,スノーボード.png,雪だるま.png,雪玉（小）.png,雪玉（大）.png"};
+        log("bgm_num = %d",bgm_num);
+        p = std::strtok(hirai[hirai_num[bgm_num]], ",");
+                    log("bgm_num = %s",hirai[hirai_num[bgm_num]]);
         while (p != NULL) {
             tonderu[str_num] = new char[70];
             std::strcpy(tonderu[str_num], p);
-            
             str_num++;
             //CCLOG("str[%i]:%s",str_num,p);
             p = strtok(NULL, ",");
@@ -1634,7 +1654,10 @@ void HelloWorld::onTouchEnded(Touch* touches, Event* event)
         //log("touch");
         //CCDirector::getInstance()->replaceScene( HelloWorld::scene((char*)season->getCString()));
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-        CCDirector::getInstance()->replaceScene( StartMenuScene::create() );
+        CCDirector::getInstance()->replaceScene( TitleMenuScene::create() );
+    
+//            CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+//            CCDirector::getInstance()->replaceScene( HelloWorld::scene(stage_num2 + 1));
         
         if(!pause_flg){
             // 一時停止
@@ -1880,7 +1903,7 @@ void HelloWorld::updateGame(float dt)
     {
         gameOver();
     }
-    if ((clear_time[bgm_num] != 0) && (int)elapsedTime > clear_time[bgm_num]) {
+    if ((clear_time[bgm_num] != 0) && (int)elapsedTime >= clear_time[bgm_num]/3) {
         gameOver();
     }
     
@@ -2143,7 +2166,13 @@ void HelloWorld::updateGame(float dt)
     
     seasons = stage_num2;
     
-    if (seasons == 15 || seasons == 16 || seasons == 17 || seasons == 21 || seasons == 22 || seasons == 23) {
+    if (seasons == 15 || seasons == 16 || seasons == 17) {
+        if ((int)(elapsedTime*10) % 20 == 0 && (int)elapsedTime % 14 == 0) {
+            trap(seasons);
+        }
+    }
+    
+    if (seasons == 21 || seasons == 22 || seasons == 23) {
         if ((int)(elapsedTime*10) % 10 == 0 && (int)elapsedTime % 7 == 0) {
             trap(seasons);
         }
@@ -2168,7 +2197,7 @@ void HelloWorld::trap(int seasons)
         
         //Animation( *animation = Animation(::create();
         
-        otiba->runAction(MoveTo::create(5.0f, Point(0,-300)));
+        otiba->runAction(MoveTo::create(5.0f, Point(0,-500)));
         
         //        Animate *action = Animate::create(animation);
         //        CCRepeatForever *anime = CCRepeatForever::create(action);
