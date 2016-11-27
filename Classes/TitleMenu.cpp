@@ -16,6 +16,7 @@
 
 using namespace cocos2d;
 
+GuiUtilLayer* gui;
 bool TitleMenuScene::init()
 {
     if( Scene::init() )
@@ -54,14 +55,14 @@ void TitleMenuLayer::menu(){
     _label->retain();
     _label->setColor( Color3B(0, 0, 600) );
     _label->setPosition( Point(winSize2_2.width/2, 700) );
-    this->addChild(_label);
+//    this->addChild(_label);
     
     this->_label = CCLabelTTF::create("Game mode","Times New Roman", 48);
     this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
     _label->retain();
     _label->setColor( Color3B(0, 0, 600) );
     _label->setPosition( Point(winSize2_2.width/2, 700-90) );
-    this->addChild(_label);
+//    this->addChild(_label);
     
     
     MenuItemFont::setFontName("AppleGothic");
@@ -80,17 +81,17 @@ void TitleMenuLayer::menu(){
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         Director::getInstance()->replaceScene( StartMenuScene::create() );
     });
-//    MenuItemLabel *label4 = MenuItemFont::create("アイテム",[](Ref *obj) {
-//        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-//        Director::getInstance()->replaceScene( ItemMenuScene::create() );
-//    });
-//    MenuItemLabel *label5 = MenuItemFont::create("GUI",[](Ref *obj) {
-//        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-//        Director::getInstance()->replaceScene( GuiUtilScene::create() );
-//    });
-    Menu *menu = Menu::create(label1, label2, label3, NULL);
+    MenuItemLabel *label4 = MenuItemFont::create("アイテム",[](Ref *obj) {
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        Director::getInstance()->replaceScene( ItemMenuScene::create() );
+    });
+    MenuItemLabel *label5 = MenuItemFont::create("GUI",[](Ref *obj) {
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        Director::getInstance()->replaceScene( GuiUtilScene::create() );
+    });
+    //Menu *menu = Menu::create(label1, label2, label3, NULL);
 
-//    Menu *menu = Menu::create(label1, label2, label3, label4, label5, NULL);
+    Menu *menu = Menu::create(label1, label2, label3, label4, label5, NULL);
     
     menu->setColor( Color3B(444, 0, 0) );
     
@@ -100,10 +101,34 @@ void TitleMenuLayer::menu(){
     menu->alignItemsVertically();
     
     
-    this->addChild(menu);
+    this->addChild(menu,1);
     
+    gui->createGuit();
+//    gui->addSprite("kurenai.png",0.9);
+    gui->addSprite("Title.png",Point(320.998383,800.016418), 0.6, 1);
+    gui->addSprite("Title2.png",Point(319.001678,677.855469), 0.6);
     
+    auto listener = EventListenerTouchOneByOne::create();
     
+    //タッチ開始
+    listener->onTouchBegan = [](Touch* touch, Event* event){
+        //log("TouchBegan");
+        return true;
+    };
+    
+    //タッチ終了
+    listener->onTouchEnded = [this](Touch* touch, Event* event){
+        //log("TouchEnded");
+        
+        Point touchPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
+        
+        ParticleSpiral* pParticle = ParticleSpiral::createWithTotalParticles(1000);
+        pParticle->setPosition(touchPoint);
+        this->addChild(pParticle);
+    };
+    
+    //イベントリスナーを登録
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     
     //CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     //Director::getInstance()->replaceScene( TitleMenuScene::create() );
@@ -112,8 +137,11 @@ void TitleMenuLayer::menu(){
 
 bool TitleMenuLayer::init()
 {
-    //if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
-    if ( LayerColor::initWithColor(Color4B(255, 240, 245, 200)))
+    
+    gui = GuiUtilLayer::create();
+    gui->setNode(this);
+    if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+    //if ( LayerColor::initWithColor(Color4B(255, 240, 245, 200)))
     {
         return true;
     }

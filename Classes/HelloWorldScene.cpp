@@ -54,7 +54,7 @@ struct settsumonList {
 
 bool first_flg=false;
 char* stage[25]={"home", "home", "home", "spring", "spring", "spring", "home", "home", "home", "summer", "summer", "summer", "home", "home", "home", "autumn", "autumn", "autumn", "home", "home", "home", "winter", "winter", "winter", "home"};
-char setsumons[50][1000]={
+char setsumons[200][1000]={
     "ジャムの蓋が空かないときどうすればいい,湯煎,よく振る,念じる" ,
     "ドライクリーニングで落ちる汚れは,油汚れ,泥汚れ,汗" ,
     "シリコン製品が食器洗い機不可の理由は,酸に弱い,セットできない,特になし" ,
@@ -104,15 +104,166 @@ char setsumons[50][1000]={
     "掃除機の中で排気が一番きれいなのはどれ,サイクロン式,紙パック式,トルネード式" ,
     "靴を洗うとき何を使うと臭いが消えやすい,酸素系漂白剤,酵素系漂白剤,窒素系漂白剤" ,
     "パンツの黄ばみを消すには何入りの石鹸を使うとよい,ケイ酸塩,硝酸ナトリウム,リン酸カルシウム" ,
-    "クエン酸と塩素系洗剤を混ぜるとどうなる,塩素ガスが発生,特になし,塩酸が生成" };
+    "クエン酸と塩素系洗剤を混ぜるとどうなる,塩素ガスが発生,特になし,塩酸が生成" ,
+    "アサリの砂抜きをするときの適切な塩分濃度は,4%,8%,16%" ,
+    "お米の１合は何グラム,150g,134g,130g" ,
+    "計量するときの大さじと小さじはそれぞれ何cc,15ccと5cc,10ccと5cc,20ccと10cc" ,
+    "半熟ゆで卵を作るには沸騰したお湯で何分茹でる,4分,7分,10分" ,
+    "焼鳥の砂肝は人間で言うとどの部分,胃,肝臓,脾臓" ,
+    "アンチョビは何の塩漬け,カタクチイワシ,スケトウダラ,ロウニンアジ" ,
+    "ご飯を冷凍保存するときにおいしく食べれる期限は,3か月,6ヵ月,8か月" ,
+    "オニオンスライスの辛みを抜く方法は,酢水につける,茹でる,塩を振る" ,
+    "ブロッコリーの上のつぶつぶは何,蕾,花,葉" ,
+    "魚をグリルで焼くときの適切な時間配分は,表3分：裏7分,表5分：裏5分,表7分：裏3分" ,
+    "ベーコンをカリカリに焼くときの火加減は,弱火,強火,中火" ,
+    "パプリカの赤、オレンジ、黄で一番栄養素が高いのは,オレンジ,赤,黄" ,
+    "煮物を作る時に味がしみ込むタイミングは,火を止めている時,沸騰する前,沸騰中" ,
+    "アルミホイルの表と裏の違いは,特にない,表を内側に使用,裏を内側に使用" ,
+    "オリーブオイルを冷蔵庫で保存するとどうなる,固まる,栄養価が増える,栄養価が減る" ,
+    "この中で生で食べられないのは,ジャガイモ,オクラ,じゅんさい" ,
+    "魚を焼くときの適切な火加減は,遠火の強火,近火の弱火,近火の強火" ,
+    "新玉ねぎとはいつごろ収穫されたものを指すか,4～5月,6～7月,2～3月" ,
+    "山芋が生で食べられるのは何が沢山含まれるためか,アミラーゼ,アミリウム,アミニン" ,
+    "ジャガイモを調理する際に取らないといけない部分は,芽,皮,根" ,
+    "スーパーの見切り品で椎茸の栄養はどうなっているか,ほぼ変わらない,減少,増加" ,
+    "ピータンの原料は何,アヒルの卵,ガチョウの卵,カモの卵" ,
+    "干しシイタケは何時間以上かけて戻すか,24時間,8時間,16時間" ,
+    "ホールトマトの酸味を抑えるにはどうする,砂糖を入れる,酢を入れる,塩を入れる" ,
+    "レバーの臭みを取るには何につける,牛乳,酢,はちみつ" ,
+    "タケノコのあく抜きをするときには何を入れる,米ぬか,米麹,ぬか味噌" ,
+    "桜肉は何の肉,馬,猪,兎" ,
+    "冷ごはんの上手な使い方は,チャーハン,牛丼,ライスバーガー" ,
+    "カチカチになったフランスパンの上手な使い方は,フレンチトースト,ハンバーガー,サンドイッチ" ,
+    "ホタテを生で食べるときに取る部位の俗称は,ウロ,ウソ,ウノ" ,
+    "ニンニクの皮を剥き易くする方法は,レンジでチン,念じる,牛乳につける" ,
+    "ペペルンゴの意味は,胡椒少々,～添え,粘着性のソース" ,
+    "高野豆腐を冷凍するとどうなる,変わらない,ボソボソになる,栄養価が減る" ,
+    "ゆで卵の殻の簡単な剥き方は,冷水で冷やす,沸騰させない,直ぐ剥く" ,
+    "料理のさしすせそは調味料の何を意味する,入れる順番,使う量の順番,入手難度の順番" ,
+    "ほうれん草を茹でるときに塩を入れる理由は,アク抜き,色見出し,味付け" ,
+    "おにぎりの作り方でダメなのは,握る,ご飯を固めに炊く,お椀の中で転がす" ,
+    "料理を取り分けたりするための杓子を何という,レードル,シードル,スチードル" ,
+    "パンなどの生地を分割するのに使う調理器具は,スケッパー,トリッパー,スキッパー" ,
+    "包丁を砥石で研ぐとき１０円玉何枚分浮かせる,3枚,2枚,4枚" ,
+    "魚の切り身を冷蔵・冷凍保存するときに必要なことは,シートを取る,直ぐに冷凍する,塩を振る" ,
+    "生卵をレンジでチンするとどうなる,爆発する,ゆで卵になる,半熟卵になる" ,
+    "うどんを作る時の小麦粉の種類は,強力粉,薄力粉,中力粉" ,
+    "カレーを作るとき具材を煮込む前に何をする,炒める,粗熱を取る,水分を拭き取る" ,
+    "普通の醤油にもう一回醤油麹を仕込んだ物を何という,刺身醤油,酢醤油,出汁醤油" ,
+    "出汁巻き卵をふわっとさせるときの出汁の割合は,出汁6：卵1,出汁3：卵1,出汁1：卵1" ,
+    "米を研ぐときは何に入れて研ぐ,ボール,ざる,金ざる" ,
+    "クイニーアマンとは何,お菓子,スープ,小鹿のリゾット" ,
+    "揚物の油で菜箸全体から勢いよく泡が出る状態は何℃,190℃,220℃,160℃" ,
+    "唐揚げを揚げるときの油の温度は,160℃,180℃,200℃" ,
+    "遺伝子組み換え食品を食べたときの人体への影響は,特にない,遺伝子障害,嘔吐、下痢" ,
+    "病床数がいくつ以上の入院施設を病院と呼ぶか,20,16,11" ,
+    "微生物を薬品などを用いて死滅させることを何という,殺菌,消毒,除菌" ,
+    "ナッツ類に含まれるオレイン酸は何に効く,高血圧,末端冷え症,貧血" ,
+    "乳酸を取り除くには何を食べると良い,梅干し,バナナ,塩辛" ,
+    "この中で一番鉄分の多い食品はどれ,あさり,イカ,舞茸" ,
+    "この中で一番イボに効くものはどれ,ハトムギ,玄米,月見草" ,
+    "ワカメを食べすぎることによる害は,ヨウ素過剰摂取,特になし,毒素蓄積" ,
+    "合成サプリと一緒にコーヒーを飲むとどうなる,胃が荒れる,特になし,効果が薄れる" ,
+    "水素水を飲むとどういう効果がある,特にない,痩せる,血圧が下がる" ,
+    "酵素を壊さない為には味噌汁を何℃以下にする,65℃,85℃,75℃" ,
+    "野菜を加熱すると失われる栄養素は,ビタミンC,亜鉛,コラーゲン" ,
+    "大豆を食べると血液が何性になる,アルカリ性,中性,酸性" ,
+    "手先がつる場合何の不足が考えられる,カリウム,亜鉛,ビタミンK" ,
+    "三大栄養素は炭水化物、タンパク質とあと何,脂肪,油脂,オレイン酸" ,
+    "青魚に含まれる摂ると頭の良くなる栄養素は,DHA,DHE,DHC" ,
+    "痛風の原因になるプリン体を多く含むのは,クロレラ,イクラ,プリン" ,
+    "生タマネギを食べると血がどうなる,サラサラ,ドロドロ,コリコリ" ,
+    "シャンピニオンエキスはどういう効果がある,消臭,胃のむかつき,火傷" ,
+    "トマト等に入っているリコピンの健康作用は,抗酸化,血圧低下,消臭" ,
+    "爪がよく割れる場合何を摂取すると良い,亜鉛,鉄分,ビタミンB12" ,
+    "茄子の紫色の色素の名前は,ナスニン,アキロール,ニンギス" ,
+    "ゴボウに含まれる水溶性食物繊維の名前は,イヌリン,ネコリン,クリリン" ,
+    "難消化性デキストリンは何に効く,高血糖,高脂血症,高血圧" ,
+    "虫歯の発生を予防する成分は,キシリトール,大豆ペプチド,アルギニン" ,
+    "骨芽細胞や砕骨細胞に作用し骨代謝を調節する成分は,乳塩基性ペプチド,硫塩酸化ペプチド,良性拡径ペプチド" ,
+    "低分子アルギン酸ナトリウムは何に効果がある,コレステロール値,血糖値,口臭" ,
+    "男性のメタボリックシンドロームは腹囲何cm以上,85cm,75cm,80cm" ,
+    "かつお節オリゴペプチドは何に効果がある,高血圧,高脂血症,高血糖" ,
+    "一定の基準を満たす健康補助食品に許可される表示は,JHFA,特定保健用食品,EPA" ,
+    "健康表示を厚生労働大臣が許可した食品を何という,特定保健用食品,特定保健用良品,特定保建用食品" ,
+    "大豆イソフラボンを摂取すると何に効果がある,更年期障害,味覚障害,聴覚障害" ,
+    "アサイーのポリフェノールはワインの何倍か,10倍,20倍,50倍" ,
+    "クエン酸にはどんな効果がある,疲労回復,美肌,消臭" ,
+    "中鎖脂肪酸にはどんな効果がある,肥満防止,老化防止,体臭防止" ,
+    "グルコサミンを摂取すると何に効く,関節の炎症,骨の炎症,皮膚の炎症" ,
+    "ラブレ菌を摂取するとどんな効果がある,感染症予防,虫歯予防,アルツハイマー予防" ,
+    "カテキンを摂取するとどんな効果がある,肥満防止,老化防止,体臭防止" ,
+    "湯の花を使用するとどんな効果がある,皮膚の引き締め,腋臭軽減,水虫改善" ,
+    "カムカムに抗酸化効果があるのは何が入っているから,エラグ酸,ニチル酸,ランツ酸" ,
+    "髪のキューティクルが壊れる原因は,紫外線,リンス,PM2.5" ,
+    "甲状腺機能を上げるにはどこをマッサージするとよい,鎖骨,眉間,こめかみ" ,
+    "コラーゲンを皮膚に塗るとどうなる,保湿効果,吸収される,特になし" ,
+    "カフェインの覚醒作用は何時間持続するか,3時間,6時間,1時間" ,
+    "睡眠時無呼吸症候群を放置するとどうなる,高血圧,高脂血症,心筋梗塞" ,
+    "うつ病になると併せてどういう弊害がある,不眠症,口臭,動脈硬化" ,
+    "健康な睡眠時間は何時間か,6時間～8時間,7時間～9時間,5時間～7時間" ,
+    "寝る前に入浴する場合の適切なお湯の温度は,ぬるめ,いつも通り,熱め" ,
+    "2日間起床を3時間遅らせると体内時計はどうなる,45分遅れる,15分早まる,15分遅れる" ,
+    "昼寝は午後の早い時間に何分間するとよいか,30分間,40分間,45分間" ,
+    "正月に飲むおとそを漢字で書くと,お屠蘇,お昇祖,お登曾" ,
+    "花見が初めて催されたのは何時代,平安時代,室町時代,江戸時代" ,
+    "3月下旬から4月上旬にかけて降り続く雨は何という,菜種梅雨,春藤梅雨,桜旬梅雨" ,
+    "鯉のぼりを漢字で書くと,鯉幟,鯉登,鯉昇" ,
+    "皐月は何月のこと,5月,6月,9月" ,
+    "桜餅に使われる葉は何の葉,オオシマサクラ,枝垂桜,ソメイヨシノ" ,
+    "除夜の鐘は何回鳴らされる,108,99,708" ,
+    "家族揃って鏡開きをするのは何のため,直会,立春,祈祷" ,
+    "正月飾りを飾る期間を何というか,松の内,竹の内,梅の内" ,
+    "正月飾りを燃やすどんど焼きの別名は,左義長,露払い,施餓鬼" ,
+    "正月飾りのしめ飾りにあしらううらじろの意味は,長寿,健康,富" ,
+    "年賀状は遅くとも何日までに出す必要があるか,1月7日,1月4日,1月3日" ,
+    "御神酒は何と読む,おみき,おみち,おめき" ,
+    "喪中の人に年賀状を出したい場合代わりに何を出す,寒中見舞い,喪中見舞い,お歳暮" ,
+    "おせちの数の子の意味は,子孫繁栄,学問成就,富" ,
+    "おせちの蒲鉾の意味は,日の出,子孫繁栄,学問成就" ,
+    "おせちの伊達巻の意味は,学問成就,子孫繁栄,長寿" ,
+    "おせちの伍の重を空にするのは何の為,来年の発展,長寿,先祖の為" ,
+    "門松の向かって左は何松というか,黒松,赤松,唐松" ,
+    "年賀状のお年玉くじの有効期限は,半年間,1年間,2年間" ,
+    "七草粥に入れないものはどれ,ドクゼリ,ホトケノザ,ゴギョウ" ,
+    "神社での初詣の参拝方法は,2礼2拍手1礼,1礼2拍手2礼,2拍手2礼1拍手" ,
+    "厄払いのお布施の相場は,5000円,10000円,30000円" ,
+    "仏教での忌服期間は何日間,49日間,13日間,108日間" ,
+    "喪中にしてはいけないことは,神社参拝,墓参り,お歳暮" ,
+    "夏の土用の丑の日は最大で年何日あるか,2日,1日,4日" ,
+    "フランス料理店でナイフを落とした時のマナー違反は,拾う,店員を呼ぶ,ほっとく" ,
+    "葬式の際の抹香を摘むときに使わない指は,薬指,人差し指,中指" ,
+    "通夜後に飲食しながら故人の話をすることを何という,通夜ぶるまい,施餓鬼,ご説法" ,
+    "故人の遺志で香典等を受け取らないことを何という,ご厚志ご辞退,供物・供花ご辞退,ご気持ご辞退" ,
+    "香典を渡す際バッグから出して渡すのはマナー違反か,マナー違反,問題なし,むしろそうする" ,
+    "母の日にプレゼントする花は,カーネーション,カーネーシュン,カーネーショソ" ,
+    "お盆の期間は8月何日から何日,13日～16日,12日～18日,14日～17日" ,
+    "七五三参りは何月何日に行うか,11月15日,7月3日,3月17日" ,
+    "関東地方でお中元はいつまでに送るか,7月15日,7月31日,8月13日" ,
+    "平成28年から適用される新祝日山の日は何月何日か,8月11日,8月18日,8月21日" ,
+    "こどもの日を五節句で何という,端午の節句,桃の節句,七夕の節句" ,
+    "ひな祭りを五節句で何という,上巳の節句,重陽の節句,人日の節句" ,
+    "五節句のうち9月に行われるものを何という,重陽の節句,上巳の節句,人日の節句" ,
+    "ひな人形で最上段に飾るのは,内裏雛,随身,繧繝縁" ,
+    "七夕の5色の短冊の内で白は何を意味する,天の川,彦星,織姫" ,
+    "小春日和とはいつのこと,初冬,冬至,初春" ,
+    "節分で邪気除けのために飾るものを何という,柊鰯,椿鯖,柏鯵" ,
+    "サンタクロースの出身地は,フィンランド,ドイツ,アイスランド" ,
+    "冬至に食べると良いとされるものは,かぼちゃ,大根,白子" ,
+    "お彼岸の期間は春分の日と秋分の日の前後何日間か,3日間,1日間,2日間" ,
+    "父の日はいつか,6月第3日曜日,5月第2日曜日,6月第1日曜日" ,
+    "仏滅の日にしてはいけないことは,結婚式,誕生会,株主総会" ,
+    "友引の日にしてはいけないことは,葬式,首脳会談,送別会" ,
+    "十五夜と十三夜と十日夜の3回行う月見を何という,三月見,三回月,三見会"
+     };
 
-static struct settsumonList sT[50];
+static struct settsumonList sT[200];
 
 void readSettoku2(){
     char *p = std::strtok(setsumons[0], ",");
     int l_num=0;
     int str_num=0;
-    for (int i=0; i<200; i++) {
+    for (int i=0; i<200*4; i++) {
         l_num = i;
         
         int ch = l_num % 4;
@@ -179,7 +330,8 @@ Scene* HelloWorld::scene(int stage_num)
     do
     {
         // 'scene' is an autorelease object
-        scene = Scene::create();
+        //scene = Scene::create();
+        scene = Scene::createWithPhysics();
         CC_BREAK_IF(! scene);
         
         // 'layer' is an autorelease object
@@ -240,16 +392,32 @@ int BEST_SCORE=0;
 Size screenSize;
 int bgm_num=0;
 bool init_flg;
+ParticleGalaxy* pParticle;
 // on "init" you need to initialize your instance
+int clear_seii[25]{0,0,4,0,0,6,0,0,8,0,0,10,0,0,12,0,0,14,0,0,16,0,0,18,20};
+int clear_time[25]{60,90,0,60,90,0,90,120,0,90,120,0,120,150,0,120,150,0,150,180,0,150,180,0,180};
 bool HelloWorld::init()
 {
-    char* stage_title;
+    char stage_title[100];
+    //sprintf(stage_title,"Stage ");
     sprintf(stage_title,"Stage %d   [%s round]",(stage_num2+1), season.getCString());
     CCLabelTTF *text = CCLabelTTF::create(stage_title, "Arial", 32);
+    text->setColor(Color3B::WHITE);
     text->setPosition(CCPointMake(200, 1100));
-    text->setColor(Color3B::BLACK);
-
+    //text->setColor(Color3B::BLACK);
     this->addChild(text,3);
+    
+    char stage_clear[100];
+    if(clear_seii[stage_num2] != 0){
+        sprintf(stage_clear,"Stage_Clear you need answer about %d times",clear_seii[stage_num2]);
+    }else{
+        sprintf(stage_clear,"Stage_Clear you need escape about %d seconds",clear_time[stage_num2]);
+    }
+    CCLabelTTF *text2 = CCLabelTTF::create(stage_clear, "Arial", 32);
+    text2->setColor(Color3B::WHITE);
+    text2->setPosition(CCPointMake(200, 1000));
+    //text->setColor(Color3B::BLACK);
+    this->addChild(text2,3);
     
     //char apiKey[] = "14d053f4456ddde402acb72c1f81288bac66dcdd";
     //char spotID[] = "351624";
@@ -306,7 +474,8 @@ bool HelloWorld::init()
         // super init first
         //////////////////////////////////////////////////////////////////////////
         
-        CC_BREAK_IF(! CCLayerColor::initWithColor( Color4B(255,255,255,255) ) );
+        //CC_BREAK_IF(! CCLayerColor::initWithColor( Color4B(255,255,255,255) ) );
+        CC_BREAK_IF(! CCLayerColor::initWithColor( Color4B(0,0,0,0) ) );
         
         //////////////////////////////////////////////////////////////////////////
         // add your codes below...
@@ -352,6 +521,21 @@ bool HelloWorld::init()
                                    player->getContentSize().height/2 + visibleSize.height/2) );
         this->addChild(player);
         
+        
+        // 剛体の生成
+        auto material = PHYSICSBODY_MATERIAL_DEFAULT;
+        material.density     = 1.0f; // 密度
+        material.restitution = 0.9f; // 反発係数
+        material.friction    = 0.5f; // 摩擦係数
+        auto pBody = PhysicsBody::createBox(player->getContentSize(), material);
+        //pBody->setDynamic(true); // 地面は重力の影響を受けない
+        
+        pBody->setMass(1.0f); // 重さ
+        
+        // スプライトに剛体を関連付ける
+        player->setPhysicsBody(pBody);
+        
+        
         this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
         
         // タッチイベントを追加する場合
@@ -362,6 +546,37 @@ bool HelloWorld::init()
         touchListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
         touchListener->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
         getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+        
+        auto listener = EventListenerTouchOneByOne::create();
+        
+
+
+        //タッチ開始
+        listener->onTouchBegan = [this](Touch* touch, Event* event){
+            //log("TouchBegan");
+            Point touchPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
+            pParticle = ParticleGalaxy::createWithTotalParticles(1000);
+            pParticle->setPosition(touchPoint);
+            this->addChild(pParticle);
+            return true;
+        };
+        
+        //タッチ中
+        listener->onTouchMoved = [](Touch* touch, Event* event){
+            //log("TouchMoved");
+            Point touchPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
+            pParticle->setPosition(touchPoint);
+            return true;
+        };
+        
+        //タッチ終了
+        listener->onTouchEnded = [this](Touch* touch, Event* event){
+            //log("TouchEnded");
+            this->removeChild(pParticle);
+        };
+        
+        //イベントリスナーを登録
+        this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
         
         //_targets = new CCArray;
         //_projectiles = new CCArray;
@@ -612,7 +827,7 @@ void HelloWorld::DrawScene(void){
         
         Sprite *time = Sprite::create(TIME_gif, Rect(0, 0, 100, 60) );
         time->setPosition(Point(590,930));
-        this->addChild(time);
+        this->addChild(time,4);
         
         //タイマーを表示
         LabelTTF* timerLabel = LabelTTF::create("     0", settoku_font, 24.0f);
@@ -620,11 +835,11 @@ void HelloWorld::DrawScene(void){
         
         timerLabel->setPosition(Point(580, 920));
         timerLabel->setTag(100);
-        this->addChild(timerLabel);
+        this->addChild(timerLabel,4);
         
         Sprite *pause = Sprite::create(PAUSE_gif, Rect(0, 0, 100, 176) );
         pause->setPosition(Point(590,1048));
-        this->addChild(pause);
+        this->addChild(pause,4);
         
         
         //SCOREを表示
@@ -666,6 +881,7 @@ void HelloWorld::changeSettoku(float dt){
     settokuOutput(0);
 }
 
+int setsu[25] = {1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,5};
 void HelloWorld::settokuOutput(int ch){
     
     //printf("[%s, %s, %s]\n", sL[0].choice1, sL[0].choice2, sL[0].choice3);
@@ -691,11 +907,11 @@ void HelloWorld::settokuOutput(int ch){
     {
         settoku1 = Sprite::create(settoku1_gif, Rect(0, 0, 214,80) );
         settoku1->setPosition(Point(se1w,seh));
-        this->addChild(settoku1);
+        this->addChild(settoku1,4);
     }else{
         settoku1 = Sprite::create(settoku1_gif, Rect(0, 0, 215, 102) );
         settoku1->setPosition(Point(se1w,seh+54));
-        this->addChild(settoku1);
+        this->addChild(settoku1,4);
     }
     
     // settoku2 bg
@@ -704,11 +920,11 @@ void HelloWorld::settokuOutput(int ch){
     {
         settoku2 = Sprite::create(settoku2_gif, Rect(0, 0, 212, 80) );
         settoku2->setPosition(Point(se2w,seh));
-        this->addChild(settoku2);
+        this->addChild(settoku2,4);
     }else{
         settoku2 = Sprite::create(settoku2_gif, Rect(0, 0, 214, 102) );
         settoku2->setPosition(Point(se2w,seh+54));
-        this->addChild(settoku2);
+        this->addChild(settoku2,4);
     }
     
     // settoku3 bg
@@ -716,11 +932,11 @@ void HelloWorld::settokuOutput(int ch){
     {
         settoku3 = Sprite::create(settoku3_gif, Rect(0, 0, 214, 80) );
         settoku3->setPosition(Point(se3w,seh));
-        this->addChild(settoku3);
+        this->addChild(settoku3,4);
     }else{
         settoku3 = Sprite::create(settoku3_gif, Rect(0, 0, 214, 102) );
         settoku3->setPosition(Point(se3w,seh+54));
-        this->addChild(settoku3);
+        this->addChild(settoku3,4);
     }
     
     // setsumon
@@ -729,9 +945,24 @@ void HelloWorld::settokuOutput(int ch){
     
     setsumon = Sprite::create(setsumon_png, Rect(0, 0, 640, 80) );
     setsumon->setPosition(Point(320,setsuh));
-    this->addChild(setsumon);
+    this->addChild(setsumon,4);
     
-    se_ls=rand()%30;
+    // 剛体の生成
+    auto material = PHYSICSBODY_MATERIAL_DEFAULT;
+    material.density     = 1.0f; // 密度
+    material.restitution = 0.9f; // 反発係数
+    material.friction    = 0.5f; // 摩擦係数
+    auto pBody = PhysicsBody::createBox(setsumon->getContentSize(), material);
+    pBody->setDynamic(false); // 地面は重力の影響を受けない
+    
+    // スプライトに剛体を関連付ける
+    setsumon->setPhysicsBody(pBody);
+    
+    if(setsu[stage_num2] == 5){
+        se_ls=rand()%200;
+    }else{
+        se_ls=rand()%50+(setsu[stage_num2]-1)*50;
+    }
     
     ch_ls=rand()%3;
     
@@ -747,11 +978,11 @@ void HelloWorld::settokuOutput(int ch){
         // setsumon label
         
         LabelTTF* setsuLabel = LabelTTF::create(sT[se_ls].setsumon, settoku_font, s_size);
-        //printf("%d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
+        //printf("ch0 %d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
         setsuLabel->setDimensions(Size(890,0));
         setsuLabel->setPosition(Point(se1w+150,seh+sc_h+100));
         setsuLabel->setColor(Color3B::BLACK);
-        this->addChild(setsuLabel);
+        this->addChild(setsuLabel,4);
         
         // settoku1 label
         
@@ -759,31 +990,31 @@ void HelloWorld::settokuOutput(int ch){
         //printf("%d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
         s1Label->setDimensions(Size(190,0));
         s1Label->setPosition(Point(se1w,seh+sc_h));
-        this->addChild(s1Label);
+        this->addChild(s1Label,4);
         
         // settoku2 label
         
         LabelTTF* s2Label = LabelTTF::create(sT[se_ls].choice2, settoku_font, f_size);
         s2Label->setDimensions(Size(190,0));
         s2Label->setPosition(Point(se2w,seh+sc_h));
-        this->addChild(s2Label);
+        this->addChild(s2Label,4);
         
         // settoku3 label
         
         LabelTTF* s3Label = LabelTTF::create(sT[se_ls].choice3, settoku_font, f_size);
         s3Label->setDimensions(Size(190,0));
         s3Label->setPosition(Point(se3w,seh+sc_h));
-        this->addChild(s3Label);
+        this->addChild(s3Label,4);
         
     }else if (ch_ls == 1) {
         // setsumon label
         
         LabelTTF* setsuLabel = LabelTTF::create(sT[se_ls].setsumon, settoku_font, s_size);
-        //printf("%d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
+        //printf("ch1 %d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
         setsuLabel->setDimensions(Size(890,0));
         setsuLabel->setPosition(Point(se1w+150,seh+sc_h+100));
         setsuLabel->setColor(Color3B::BLACK);
-        this->addChild(setsuLabel);
+        this->addChild(setsuLabel,4);
         
         // settoku1 label
         
@@ -791,31 +1022,31 @@ void HelloWorld::settokuOutput(int ch){
         //printf("%d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
         s1Label->setDimensions(Size(190,0));
         s1Label->setPosition(Point(se1w,seh+sc_h));
-        this->addChild(s1Label);
+        this->addChild(s1Label,4);
         
         // settoku2 label
         
         LabelTTF* s2Label = LabelTTF::create(sT[se_ls].choice1, settoku_font, f_size);
         s2Label->setDimensions(Size(190,0));
         s2Label->setPosition(Point(se2w,seh+sc_h));
-        this->addChild(s2Label);
+        this->addChild(s2Label,4);
         
         // settoku3 label
         
         LabelTTF* s3Label = LabelTTF::create(sT[se_ls].choice2, settoku_font, f_size);
         s3Label->setDimensions(Size(190,0));
         s3Label->setPosition(Point(se3w,seh+sc_h));
-        this->addChild(s3Label);
+        this->addChild(s3Label,4);
         
     }else if (ch_ls == 2) {
         // setsumon label
         
         LabelTTF* setsuLabel = LabelTTF::create(sT[se_ls].setsumon, settoku_font, s_size);
-        //printf("%d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
+        //printf("ch2 %d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
         setsuLabel->setDimensions(Size(890,0));
         setsuLabel->setPosition(Point(se1w+150,seh+sc_h+100));
         setsuLabel->setColor(Color3B::BLACK);
-        this->addChild(setsuLabel);
+        this->addChild(setsuLabel,4);
         
         // settoku1 label
         
@@ -823,21 +1054,21 @@ void HelloWorld::settokuOutput(int ch){
         //printf("%d %s %s %s", se_ls, sT[se_ls].choice1, sT[se_ls].choice2, sT[se_ls].choice3);
         s1Label->setDimensions(Size(190,0));
         s1Label->setPosition(Point(se1w,seh+sc_h));
-        this->addChild(s1Label);
+        this->addChild(s1Label,4);
         
         // settoku2 label
         
         LabelTTF* s2Label = LabelTTF::create(sT[se_ls].choice3, settoku_font, f_size);
         s2Label->setDimensions(Size(190,0));
         s2Label->setPosition(Point(se2w,seh+sc_h));
-        this->addChild(s2Label);
+        this->addChild(s2Label,4);
         
         // settoku3 label
         
         LabelTTF* s3Label = LabelTTF::create(sT[se_ls].choice1, settoku_font, f_size);
         s3Label->setDimensions(Size(190,0));
         s3Label->setPosition(Point(se3w,seh+sc_h));
-        this->addChild(s3Label);
+        this->addChild(s3Label,4);
     }
 }
 
@@ -1036,7 +1267,7 @@ void HelloWorld::AnserOutput(int touchNum){
         else{
             Anser->setPosition(Point(105+((touchNum-1)*214),seh));
         }
-        this->addChild(Anser);
+        this->addChild(Anser,4);
         
     }else{
         
@@ -1064,7 +1295,7 @@ void HelloWorld::AnserOutput(int touchNum){
         this->scheduleOnce(schedule_selector(HelloWorld::changeSettoku), 2.0);
         
         Anser->setPosition(Point(116+((touchNum-1)*214),seh+50));
-        this->addChild(Anser);
+        this->addChild(Anser,4);
     }
     
 }
@@ -1152,7 +1383,7 @@ void HelloWorld::addTarget()
         }else if(chara < 100){
             target = Sprite::create(tonderu[4]);
             target->setTag(1);
-            //cuv_flg = true;
+            cuv_flg = true;
         }
     }
     
@@ -1503,6 +1734,7 @@ void HelloWorld::addTarget()
             
             target->setRotation(90);
             
+            if(pause_flg){
             this->addChild(target);
             
             if (screenSize.height > 960)
@@ -1516,6 +1748,7 @@ void HelloWorld::addTarget()
                 FiniteTimeAction* actionMove = MoveTo::create( (float)actualDuration,
                                                               Point(actualX, 1000 ));
                 target->runAction( CCSequence::create(actionMove, NULL) );
+            }
             }
         }
     }
@@ -1561,6 +1794,38 @@ void HelloWorld::gameLogic(float dt)
     this->addTarget();
 }
 
+void HelloWorld::gameClear()
+{
+    GameOverScene *gameOverScene = GameOverScene::create();
+    char a[100];
+    int score = (int)elapsedTime*5+s_num*20+h_num*10;
+    int bonus = 0;
+    
+    //log("~~~~~~~~~~%d",BEST_SCORE);
+        BEST_SCORE = score;
+        sprintf(a, "Score : %d\n BestScore : %d \n Update BEST SCORE!!",score,BEST_SCORE);
+        gameOverScene->getLayer()->setScore(h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
+        log("heart %d, seii %d time %d, bonus %d,score %d, best %d",h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
+        userDefault = CCUserDefault::sharedUserDefault();
+        int i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integerKey",0);
+        log("userdata best %d",i);
+        userDefault->setIntegerForKey("integerKey", BEST_SCORE);
+    //yo1->release();
+    //yo2->release();
+    //yo3->release();
+    //yo4->release();
+    if (season.compare("spring") == 0) {
+        yo1->stopAllActions();
+        yo2->stopAllActions();
+        yo3->stopAllActions();
+        yo4->stopAllActions();
+    }
+    //アニメーションを止める
+    //gameOverScene->getLayer()->getLabel()->setString(a);
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+    //CCCallFuncO *pFuncO = CCCallFuncO::create(this, callfuncO_selector(gameOverScene), score);
+    CCDirector::getInstance()->replaceScene(gameOverScene);
+}
 
 void HelloWorld::gameOver()
 {
@@ -1570,23 +1835,12 @@ void HelloWorld::gameOver()
     int bonus = 0;
     
     //log("~~~~~~~~~~%d",BEST_SCORE);
-    if (BEST_SCORE < score) {
-        BEST_SCORE = score;
-        sprintf(a, "Score : %d\n BestScore : %d \n Update BEST SCORE!!",score,BEST_SCORE);
-        gameOverScene->setScore(h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
-        log("heart %d, seii %d time %d, bonus %d,score %d, best %d",h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
-        userDefault = CCUserDefault::sharedUserDefault();
-        int i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integerKey",0);
-        log("userdata best %d",i);
-        userDefault->setIntegerForKey("integerKey", BEST_SCORE);
-    }else{
         sprintf(a, "Score : %d\n BestScore : %d",score,BEST_SCORE);
         userDefault = CCUserDefault::sharedUserDefault();
         int i = CCUserDefault::sharedUserDefault()->getIntegerForKey("integerKey",0);
+        gameOverScene->getLayer()->gameover();
         log("heart %d, seii %d time %d, bonus %d,score %d, best %d",h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
         log("userdata %d",i);
-        gameOverScene->setScore(h_num, s_num, (int)elapsedTime, bonus, score, BEST_SCORE);
-    }
     //yo1->release();
     //yo2->release();
     //yo3->release();
@@ -1659,31 +1913,33 @@ void HelloWorld::onTouchEnded(Touch* touches, Event* event)
 //            CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 //            CCDirector::getInstance()->replaceScene( HelloWorld::scene(stage_num2 + 1));
         
-        if(!pause_flg){
-            // 一時停止
-            //cocos2d::Director::getInstance()->pause();
-//            for (auto* childs : this->getChildren()){
-//                　Sprite *spriteChilds = (Sprite *)childs;
-//                　spriteChilds->pause();//———————–子供：ポーズ
-//                　for (auto* mago : spriteChilds->getChildren()){
-//                    　　Sprite *spriteMagos = (Sprite *)mago;
-//                    　　spriteMagos->pause();//——————–孫：ポーズ
-//                    　}
-//            }
+//        if(!pause_flg){
 //            pause_flg = true;
-        }else{
-            // 一時停止を再開
-            //cocos2d::Director::getInstance()->resume();
-            
+//            // 一時停止
+//            cocos2d::Director::getInstance()->pause();
+//            CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 //            for (auto* childs : this->getChildren()){
-//                　Sprite *spriteChilds = (Sprite *)childs;
-//                　spriteChilds->resume();//———————–子供：ポーズ
-//                　for (auto* mago : spriteChilds->getChildren()){
-//                    　　Sprite *spriteMagos = (Sprite *)mago;
-//                    　　spriteMagos->resume();//——————–孫：ポーズ
-//                    　}
+//                Sprite *spriteChilds = (Sprite *)childs;
+//                spriteChilds->pause(); //———————–子供：ポーズ
+//                for (auto* mago : spriteChilds->getChildren()){
+//                    Sprite *spriteMagos = (Sprite *)mago;
+//                    spriteMagos->pause();//——————–孫：ポーズ
+//                    }
 //            }
-        }
+//        }else{
+//            //一時停止を再開
+//            cocos2d::Director::getInstance()->resume();
+//            CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+//            for (auto* childs : this->getChildren()){
+//                Sprite *spriteChilds = (Sprite *)childs;
+//                spriteChilds->resume(); //———————–子供：ポーズ
+//                for (auto* mago : spriteChilds->getChildren()){
+//                    Sprite *spriteMagos = (Sprite *)mago;
+//                    spriteMagos->resume(); //——————–孫：ポーズ
+//                    }
+//            }
+//                        pause_flg = false;
+//        }
     }
     
     
@@ -1869,8 +2125,7 @@ void HelloWorld::onTouchMoved(cocos2d::Touch *pTouches, cocos2d::Event *pEvent) 
 
 Sprite *damage,*lifeup;
 
-int clear_seii[25]{0,0,4,0,0,6,0,0,8,0,0,10,0,0,12,0,0,14,0,0,16,0,0,18,20};
-int clear_time[25]{60,90,0,60,90,0,90,120,0,90,120,0,120,150,0,120,150,0,150,180,0,150,180,0,180};
+
 
 int tcount = 0;
 
@@ -1901,10 +2156,10 @@ void HelloWorld::updateGame(float dt)
     
     if((clear_seii[bgm_num] != 0) && s_num == clear_seii[bgm_num])
     {
-        gameOver();
+        gameClear();
     }
-    if ((clear_time[bgm_num] != 0) && (int)elapsedTime >= clear_time[bgm_num]/3) {
-        gameOver();
+    if ((clear_time[bgm_num] != 0) && (int)elapsedTime >= clear_time[bgm_num]/cleartime_mod) {
+        gameClear();
     }
     
     if (season.compare("spring") == 0) {
@@ -1946,8 +2201,11 @@ void HelloWorld::updateGame(float dt)
             //log("%d %d",player->getPosition().x, player->getPosition().y);
             
             
-            if (target->boundingBox().intersectsRect(playerRect))
+            if (target != NULL   ){
+                
+            if(target->boundingBox().intersectsRect(playerRect))
             {
+
                 if (target->getTag() == 999) {
                     if(!lifeup_flg){
                         if (h_num < LIFE_MAX) {
@@ -2156,6 +2414,7 @@ void HelloWorld::updateGame(float dt)
     //		this->removeChild(projectile, true);
     //	}
     //	projectilesToDelete->release();
+    }
     
     elapsedTime += dt;
     
@@ -2178,9 +2437,9 @@ void HelloWorld::updateGame(float dt)
         }
     }
     
-    if (elapsedTime > cleartime) {
-        gameOver();
-    }
+//    if (elapsedTime > cleartime) {
+//        gameOver();
+//    }
     
     //SCOREを表示する
 //    CCString* scoreString = CCString::createWithFormat("%8.0d", (int)elapsedTime*5+s_num*20);

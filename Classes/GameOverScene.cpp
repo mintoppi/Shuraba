@@ -31,14 +31,10 @@
 
 using namespace cocos2d;
 
-//int scores=0;
-//int BEST_SCORE = 0;
 bool GameOverScene::init()
 {
 	if( CCScene::init() )
 	{
-        //scores = this->score;
-        //BEST_SCORE = this->best_score;
 		this->_layer = GameOverLayer::create();
 		this->_layer->retain();
 		this->addChild(_layer);
@@ -62,15 +58,6 @@ GameOverScene::~GameOverScene()
 
 float elapsedTime;
 int s_num;
-
-void set(float a, int b){
-    elapsedTime = a;
-    s_num = b;
-}
-
-void GameOverScene::setScore(int heart, int trust, int time, int bonus, int score, int best_score){
-    this->_layer->setScore(heart, trust, time, bonus, score,best_score);
-}
 
 bool se=false;
 int nums;
@@ -96,14 +83,8 @@ void GameOverLayer::setScore(int l_heart, int l_trust, int l_time, int l_bonus, 
     
     winSize = CCDirector::getInstance()->getWinSize();
     Sprite *death;
-    if (score > CLEAR_SCORE) {
-        CCLayerColor::initWithColor( Color4B(255,255,255,255));
-        //death = Sprite::create("ゲームオーバー.gif" );
-        death = Sprite::create(clear_png);
-    }else{
-        CCLayerColor::initWithColor( Color4B(0,0,0,0));
-        death = Sprite::create("ゲームオーバー.png" );
-    }
+    CCLayerColor::initWithColor( Color4B(255,255,255,255));
+    death = Sprite::create(clear_png);
     
     Size screenSize = winSize;
 
@@ -235,14 +216,146 @@ void GameOverLayer::setScore(int l_heart, int l_trust, int l_time, int l_bonus, 
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
+void GameOverLayer::gameover(){
+    
+    se=false;
+    touch_flg = false;
+    
+    winSize = CCDirector::getInstance()->getWinSize();
+    Sprite *death;
+        CCLayerColor::initWithColor( Color4B(0,0,0,0));
+        death = Sprite::create("ゲームオーバー.png" );
+    
+    Size screenSize = winSize;
+    
+    if (screenSize.height > 960)
+    {
+        death->setPosition(Point(320,620) );
+        this->addChild(death);
+    }else{
+        death->setPosition(Point(320,670) );
+        this->addChild(death);
+    }
+    
+    //CCSpriteクラスで画像を設定します。
+    auto sprite1 = Sprite::create(clear_png);
+    
+    //これをCCParallaxNodeクラスで利用します。
+    //    ParallaxNode *prallNode = ParallaxNode::create();
+    //    prallNode->setPosition(Point(0,0));
+    //    prallNode->addChild(sprite1, 1, Point(30,0), Point(320,470));
+    //
+    //    this->addChild(prallNode,1);
+    //    //this->add
+    
+    clear_flg = true;
+    //    this->_layer->score =score;
+    //    this->_layer->best_score =best_score;
+    //    CCLog("+++++++Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+    
+    //CCLog("Score : %d\n BestScore : %d \n Update BEST SCORE!!", scores, BEST_SCORE);
+    if(clear_flg){
+        //        if (best_score < score) {
+        //            //sprintf(labels, "Score : %d\n BestScore : %d \n Update BEST SCORE!!",score,score);
+        //            //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+        //            sprintf(labels, "LIFE\nTRUST\nTIME\nBONUS\nGet Score\nAll Score\nHIGH Score \n Update BEST SCORE!!");
+        //            sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, 0, 0, best_score);
+        //        }else{
+        //            sprintf(labels, "LIFE\nTRUST\nTIME\nBONUS\nGet Score\nAll Score\nHIGH Score");
+        //            sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, 0, 0, best_score);
+        //            //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+        //        }
+        
+        sprintf(labels, "LIFE\nTRUST\nTIME\nBONUS\nGet Score\nAll Score\nHIGH Score");
+        sprintf(labels2, "%d\n%d\n%d:%02d\n%d\n%d\n%d\n%d",heart, trust, time2/60, time2%60, bonus, 0, 0, best_score);
+        
+        this->_label = LabelTTF::create(labels,"arial", 32);
+        this->_label->setHorizontalAlignment(cocos2d::TextHAlignment::RIGHT);
+        _label->retain();
+        _label->setColor( Color3B(0, 0, 1000) );
+        _label->setPosition( Point(winSize.width/2-80, 550) );
+        //this->addChild(_label);
+        
+        this->_label = CCLabelTTF::create(labels2,"arial", 32);
+        this->_label->setHorizontalAlignment(TextHAlignment::RIGHT);
+        _label->retain();
+        _label->setColor( Color3B(0, 0, 1000) );
+        _label->setPosition( Point(winSize.width/2+70, 550) );
+        //this->addChild(_label);
+        
+        
+        //sprintf(labels,"Score : %d\n BestScore : %d \n Update BEST SCORE!!", score, best_score);
+        //        this->_label = LabelTTF::create(labels,"arial", 32);
+        //        this->_label->setHorizontalAlignment(cocos2d::TextHAlignment::RIGHT);
+        //        _label->retain();
+        //        _label->setColor( Color3B(0, 0, 1000) );
+        //        _label->setPosition( Point(winSize.width/2-80, 550) );
+        //        this->addChild(_label);
+        
+    }
+    
+    MenuItemLabel *label = MenuItemFont::create("STAGE SELECT",[&](Ref *sender) {
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        CCDirector::getInstance()->replaceScene( StartMenuScene::create() );
+    });
+    
+    GameManager gm = *GameManager::getInstance();
+    stage_num = gm.getStageNum();
+    //stage_num = (stage_num + 1) % 25;
+    MenuItemLabel *label2 = MenuItemFont::create("ReStart GAME",[&](Ref *sender) {
+        GameManager gm = *GameManager::getInstance();
+        gm.setStageNum(stage_num);
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        CCDirector::getInstance()->replaceScene( HelloWorld::scene(stage_num));
+    });
+    
+    Menu *menu = Menu::create(label, label2, NULL);
+    
+    //後は同じ
+    //Menu *menu = Menu::create(label, NULL);
+    
+    menu->setColor( Color3B(444, 0, 0) );
+    
+    menu->setPosition(320,300);
+    
+    //メニューを縦向きに並べます。
+    menu->alignItemsVertically();
+    
+    this->addChild(menu);
+    
+    c_flg = true;
+    
+    //イベントリスナーを作成
+    auto listener = EventListenerTouchOneByOne::create();
+    
+    //タッチ開始
+    listener->onTouchBegan = [](Touch* touch, Event* event){
+        //log("TouchBegan");
+        return true;
+    };
+    
+    //タッチ中
+    listener->onTouchMoved = [](Touch* touch, Event* event){
+    };
+    
+    //タッチ終了
+    listener->onTouchEnded = [](Touch* touch, Event* event){
+        log("TouchEnded");
+        //touch_flg = true;
+    };
+    
+    //イベントリスナーを登録
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
 int dt=0;
 void GameOverLayer::update(float delta){
     
     dt++;
     int sound;
     if(touch_flg){
-    if ((dt%6 == 0) && c_flg) {
-        if(!se){
+        if ((dt%6 == 0) && c_flg) {
+            if(!se){
             se=true;
             sound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("SE-換算.mp3");
         }

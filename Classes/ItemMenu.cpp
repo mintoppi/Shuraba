@@ -14,7 +14,7 @@
 
 using namespace cocos2d;
 
-GuiUtilLayer* gui;
+GuiUtilLayer* gui2;
 bool ItemMenuScene::init()
 {
     if( Scene::init() )
@@ -47,10 +47,10 @@ void ItemMenuLayer::menu(){
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         Director::getInstance()->replaceScene( StartMenuScene::create() );
     };
-    gui->addSprite("タッチ用-次の面をプレイ.png", "タッチ用-次の面をプレイ2.png", Point(162.259079,240.160095), callback);
+    gui2->addSprite("タッチ用-次の面をプレイ.png", "タッチ用-次の面をプレイ2.png", Point(162.259079,240.160095), callback);
 
-    gui->addSprite("タッチ用-セーブ.png",Point(479.737946,240.161957));
-    gui->addSprite("アイテムカラム.png",Point(323.993103,987.852844));
+    gui2->addSprite("タッチ用-セーブ.png",Point(479.737946,240.161957));
+    gui2->addSprite("アイテムカラム.png",Point(323.993103,987.852844));
     
     winSize2_3 = Director::getInstance()->getWinSize();
     
@@ -87,8 +87,8 @@ bool ItemMenuLayer::init()
     if ( CCLayerColor::initWithColor( Color4B(0,0,0,0) ) )
     //if ( LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
     {
-        gui = GuiUtilLayer::create();
-        gui->setNode(this);
+        gui2 = GuiUtilLayer::create();
+        gui2->setNode(this);
         menu();
         return true;
     }

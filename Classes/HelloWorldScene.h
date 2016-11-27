@@ -48,6 +48,7 @@
 #define START_SEII 0
 #define LEVEL_TIME 30
 #define cleartime 60.0
+#define cleartime_mod 3
 
 
 #define settoku_font "Hiragino Kaku Gothic Pro"
@@ -97,6 +98,8 @@ public:
     void gameLogic(float dt);
     
     void updateGame(float dt);
+    
+    void gameClear(void);
     
     void gameOver(void);
     

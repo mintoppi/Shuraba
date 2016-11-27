@@ -43,6 +43,8 @@ public:
     void addSprite(const std::string);
     void addSprite(const std::string, float);
     void addSprite(const std::string filename, cocos2d::Point point);
+    void addSprite(const std::string filename, cocos2d::Point point, float scale);
+    void addSprite(const std::string filename, cocos2d::Point point, float scale, int zoder);
     void addSprite(const std::string filename, const std::string filename2, cocos2d::Point point, std::function<void(Ref*)> callback);
     CREATE_FUNC(GuiUtilLayer);
     

@@ -47,7 +47,7 @@ public:
     void update(float delta);
 
     void setScore(int heart, int trust, int time, int bonus, int score, int best_score);
-    
+    void gameover();
     int score;
     int best_score;
     int clear_flg;
@@ -61,12 +61,7 @@ public:
     GameOverScene():_layer(NULL) {};
     ~GameOverScene();
     bool init();
-    void set(float a, int b);
-    void setScore(int heart, int trust, int time, int bonus, int score, int best_score);
-    int getScore();
     CREATE_FUNC(GameOverScene);
-    int score;
-    int best_score;
   
     CC_SYNTHESIZE_READONLY(GameOverLayer*, _layer, Layer);
 };

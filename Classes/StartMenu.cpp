@@ -214,7 +214,8 @@ void StartMenuLayer::gameStartWinter(char* stage)
 
 bool StartMenuLayer::init()
 {
-	if ( CCLayerColor::initWithColor(Color4B(255, 240, 245, 200)))
+    if ( CCLayerColor::initWithColor( Color4B(255,255,255,255) ) )
+	//if ( CCLayerColor::initWithColor(Color4B(255, 240, 245, 200)))
 	{
 		return true;
 	}

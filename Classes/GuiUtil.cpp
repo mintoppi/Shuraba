@@ -43,7 +43,7 @@ GuiUtilScene::~GuiUtilScene()
 int tTag=0;
 int tagCount=1;
 cocos2d::Vector<cocos2d::Sprite*> _targets;
-
+Node* abc;
 void GuiUtilLayer::addSprite(const std::string filename){
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -55,7 +55,7 @@ void GuiUtilLayer::addSprite(const std::string filename){
     player->setTag(tagCount);
     player->setName(filename);
     log("%s = %d", filename.c_str(), tagCount);
-    this->addChild(player);
+    abc->addChild(player);
     
     _targets.pushBack(player);
     tagCount++;
@@ -73,13 +73,20 @@ void GuiUtilLayer::addSprite(const std::string filename, float scale){
     player->setName(filename);
     log("%s = %d", filename.c_str(), tagCount);
     player->setScale(scale);
-    this->addChild(player);
+    player->setPosition(player->getPositionX()-200,player->getPositionY()-300);
+    FiniteTimeAction* actionMove = MoveBy::create( (float)6,
+                                                  Point(player->getContentSize().width, 30) );
+    FiniteTimeAction* actionMove2 = MoveBy::create( (float)3,
+                                                  Point(-player->getContentSize().width, -30) );
+    auto seq = CCSequence::create(actionMove, actionMove2, NULL);
+    player->runAction( Repeat::create(EaseElasticInOut::create(seq),3) );
+    abc->addChild(player);
     
     _targets.pushBack(player);
     tagCount++;
 }
 
-Node* abc;
+
 void GuiUtilLayer::addSprite(const std::string filename, Point point){
     
     Sprite* player = Sprite::create(filename);
@@ -93,63 +100,94 @@ void GuiUtilLayer::addSprite(const std::string filename, Point point){
     tagCount++;
 }
 
+void GuiUtilLayer::addSprite(const std::string filename, Point point, float scale){
+    
+    Sprite* player = Sprite::create(filename);
+    
+    player->setPosition(point);
+    player->setTag(tagCount);
+    player->setName(filename);
+    log("%s = %d", filename.c_str(), tagCount);
+    player->setScale(scale);
+    abc->addChild(player);
+    _targets.pushBack(player);
+    tagCount++;
+}
+
+void GuiUtilLayer::addSprite(const std::string filename, Point point, float scale, int zoder){
+    
+    Sprite* player = Sprite::create(filename);
+    
+    player->setPosition(point);
+    player->setTag(tagCount);
+    player->setName(filename);
+    log("%s = %d", filename.c_str(), tagCount);
+    player->setScale(scale);
+    abc->addChild(player, zoder);
+    _targets.pushBack(player);
+    tagCount++;
+}
+
 void GuiUtilLayer::addSprite(const std::string filename, const std::string filename2, Point point, std::function<void(Ref*)> callback ){
     
     MenuItemImage *pCloseItem = MenuItemImage::create(filename,      // 通常状態の画像
                                                       filename2,    // 押下状態の画像
                                                       callback);  // 押下時のアクション
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
+    Menu* pMenu = Menu::create(pCloseItem, NULL);
     pMenu->setPosition(point);
     abc->addChild(pMenu, 1);
 }
 
 ParticleSystemQuad* particle2;
 void GuiUtilLayer::createGuit(){
-    abc = this->getParent();
+    if(abc == NULL) abc = this->getParent();
     
     const ccMenuCallback callback = [](Ref * pSender){
         CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
         Director::getInstance()->replaceScene( StartMenuScene::create() );
     };
-    addSprite("タッチ用-次の面をプレイ.png", "タッチ用-次の面をプレイ2.png", Point(162.259079,240.160095), callback);
     
-    particle2 = ParticleSystemQuad::create("player-aura.plist");
+    //addSprite("kurenai.png");
     
-    particle2->setPosition(320,530);
-    
-    this->addChild(particle2);
-    
-    addSprite("タッチ用-次の面をプレイ.png",Point(162.259079,240.160095));
-    addSprite("タッチ用-セーブ.png",Point(479.737946,240.161957));
-    addSprite("アイテムカラム.png",Point(323.993103,987.852844));
-    
-    addSprite("アイコン-愛.png",2.00);
-    addSprite("アイコン-根性.png",2.00);
-    addSprite("タッチ用-購入.png");
-    addSprite("アイコン-根性DX.png",2.00);
-    addSprite("アイコン-気合い.png",2.00);
-    addSprite("アイコン-気合いMAX.png",2.00);
-    addSprite("タッチ用-使用する(やめる).png");
-    addSprite("アイコン-強烈な愛.png",2.00);
-    addSprite("アイコン-永久根性.png",2.00);
-    addSprite("アイコン-被害妄想.png",2.00);
-//    addSprite("タッチ用-セーブ.png");
-    addSprite("タッチ用-使用する.png");
-    addSprite("アイコン-へなちょこ.png",2.00);
-    addSprite("アイコン-永久気合い.png",2.00);
-    addSprite("アイコン-貧乏舌の心.png",2.00);
-    addSprite("アイコン-貧乏舌の魂.png",2.00);
-    addSprite("アイコン-猛烈な愛の嵐.png",2.00);
-    addSprite("アイコン-欲しがり屋さん.png",2.00);
-    addSprite("アイコン-話し合いで解決.png",2.00);
-//    addSprite("タッチ用-次の面をプレイ.png");
-    addSprite("アイコン-超気合いウルトラMA.png",2.00);
-    addSprite("アイコン-全部受け止めてやる.png",2.00);
-    addSprite("アイコン-止まって見えるぜ.png",2.00);
-    addSprite("アイコン-ど根性スーパーDX.png",2.00);
-    addSprite("アイコン-ガチンコボディ.png",2.00);
-    addSprite("アイコン-こんなとこで死ねるか.png",2.00);
-    
+//    addSprite("タッチ用-次の面をプレイ.png", "タッチ用-次の面をプレイ2.png", Point(162.259079,240.160095), callback);
+//    
+////    particle2 = ParticleSystemQuad::create("player-aura.plist");
+////    
+////    particle2->setPosition(320,530);
+////    
+////    this->addChild(particle2);
+//    
+//    addSprite("タッチ用-次の面をプレイ.png",Point(162.259079,240.160095));
+//    addSprite("タッチ用-セーブ.png",Point(479.737946,240.161957));
+//    addSprite("アイテムカラム.png",Point(323.993103,987.852844));
+//    
+//    addSprite("アイコン-愛.png",2.00);
+//    addSprite("アイコン-根性.png",2.00);
+//    addSprite("タッチ用-購入.png");
+//    addSprite("アイコン-根性DX.png",2.00);
+//    addSprite("アイコン-気合い.png",2.00);
+//    addSprite("アイコン-気合いMAX.png",2.00);
+//    addSprite("タッチ用-使用する(やめる).png");
+//    addSprite("アイコン-強烈な愛.png",2.00);
+//    addSprite("アイコン-永久根性.png",2.00);
+//    addSprite("アイコン-被害妄想.png",2.00);
+////    addSprite("タッチ用-セーブ.png");
+//    addSprite("タッチ用-使用する.png");
+//    addSprite("アイコン-へなちょこ.png",2.00);
+//    addSprite("アイコン-永久気合い.png",2.00);
+//    addSprite("アイコン-貧乏舌の心.png",2.00);
+//    addSprite("アイコン-貧乏舌の魂.png",2.00);
+//    addSprite("アイコン-猛烈な愛の嵐.png",2.00);
+//    addSprite("アイコン-欲しがり屋さん.png",2.00);
+//    addSprite("アイコン-話し合いで解決.png",2.00);
+////    addSprite("タッチ用-次の面をプレイ.png");
+//    addSprite("アイコン-超気合いウルトラMA.png",2.00);
+//    addSprite("アイコン-全部受け止めてやる.png",2.00);
+//    addSprite("アイコン-止まって見えるぜ.png",2.00);
+//    addSprite("アイコン-ど根性スーパーDX.png",2.00);
+//    addSprite("アイコン-ガチンコボディ.png",2.00);
+//    addSprite("アイコン-こんなとこで死ねるか.png",2.00);
+//    
 
     
 //    addSprite("CD.png");
@@ -341,7 +379,12 @@ void GuiUtilLayer::createGuit(){
     //addSprite("バランスボール.png");
     //addSprite("ポーズボタン.png");
     //addSprite("ゲームオーバー1000.png");
-
+    //addSprite("Title.png",0.6);
+    //addSprite("Title2.png",0.6);
+    
+//    addSprite("Title.png",Point(320.998383,670.016418), 0.6, 1);
+//    addSprite("Title2.png",Point(319.001678,547.855469), 0.6);
+    
 //    //画面サイズを取得
 //    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 //    
@@ -428,7 +471,7 @@ void GuiUtilLayer::createGuit(){
                 if (target->getBoundingBox().containsPoint(touchPoint))
                 {
                     tTag = target->getTag();
-                    //log("touch %d",tTag);
+                    log("touch %d",tTag);
                 }
             }
         }
@@ -494,8 +537,8 @@ void GuiUtilLayer::createGuit(){
             }
         }
         
-        particle2->setPosition(touch->getLocation().x, touch->getLocation().y);
-            
+//        particle2->setPosition(touch->getLocation().x, touch->getLocation().y);
+        
         return true;
     };
     
@@ -508,7 +551,7 @@ void GuiUtilLayer::createGuit(){
                 Sprite* target = (*jt);
                 if(target->getTag() == tTag){
                     Point touchPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
-                    log("addSprite(\"%s\",Point(%f,%f), this->getParent());", target->getName().c_str(), target->getPositionX(), target->getPositionY());
+                    log("addSprite(\"%s\",Point(%f,%f));", target->getName().c_str(), target->getPositionX(), target->getPositionY());
                 }
             }
         }
@@ -517,7 +560,7 @@ void GuiUtilLayer::createGuit(){
     };
     
     //イベントリスナーを登録
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    abc->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, abc);
     
     //this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
 }
